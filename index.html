@@ -5,11 +5,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TV Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&display=swap">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
   width: 100%; height: 100%; overflow: hidden; background: #000; color: #fff;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
  
 /* The whole UI is drawn on a fixed 1920x1080 stage and scaled to the screen. */
@@ -68,7 +71,8 @@ html, body {
   position: absolute; left: 0; top: 0; width: 100%; height: 100%;
   font-size: 120px; font-weight: 700; line-height: 214px; text-align: center; opacity: .92;
 }
-.tile img { position: absolute; left: 50%; top: 50%; max-width: 70%; max-height: 60%; -webkit-transform: translate(-50%,-50%); transform: translate(-50%,-50%); }
+.tile img { position: absolute; left: 50%; top: 46%; width: 150px; height: 90px; object-fit: contain; -webkit-transform: translate(-50%,-55%); transform: translate(-50%,-55%); }
+.tile img.fav { top: 44%; width: 112px; height: 112px; padding: 14px; background: #fff; border-radius: 26px; }
 .tile .nm {
   position: absolute; left: 0; bottom: 0; width: 100%; padding: 14px 22px; font-size: 26px; font-weight: 600;
   background: linear-gradient(to top, rgba(0,0,0,.5), rgba(0,0,0,0));
@@ -114,6 +118,17 @@ html, body {
   background: rgba(0,0,0,.75); font: 22px/1.4 monospace; z-index: 99; white-space: pre;
 }
  
+#brand {
+  position: absolute; left: 120px; top: 18px; height: 44px; line-height: 44px; white-space: nowrap;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 40px; font-weight: 800; letter-spacing: -1px; text-transform: lowercase;
+}
+#brand .tv {
+  display: inline-block; margin-left: 12px; padding: 0 11px; height: 30px; line-height: 30px; vertical-align: middle;
+  position: relative; top: -2px; border-radius: 8px; background: #fff; color: #111;
+  font-size: 20px; letter-spacing: 2px; text-transform: uppercase;
+}
+ 
 /* Lite mode: zero animation, minimal painting. Toggle with key 1, or open the app URL with ?lite=1 */
 body.lite * { transition: none !important; animation: none !important; }
 body.lite #shade { display: none; }
@@ -128,6 +143,7 @@ body.lite .glass { border-radius: 0; }
   <div id="shade"></div>
  
   <div id="home">
+    <div id="brand"></div>
     <div id="clockbox">
       <div id="clock">--:--</div>
       <div id="date"></div>
@@ -154,12 +170,8 @@ body.lite .glass { border-radius: 0; }
     <div id="hints" class="glass">
       <span><b>&#9664; &#9654;</b> Browse</span>
       <span><b>OK</b> Open</span>
-      <span class="k r">&#9679;</span><span>Wallpaper</span>
-      <span class="k g">&#9679;</span><span>Screensaver</span>
-      <span class="k y">&#9679;</span><span>Reload</span>
-      <span class="k b">&#9679;</span><span>Debug</span>
-      <span><b>1</b> Lite</span>
-    </div>
+      <span><b>&#9650;</b> Wallpaper</span>
+      <span><b>&#9660;</b> Info</span>
   </div>
  
   <div id="saver"><div id="saverclock">--:--</div></div>
@@ -171,6 +183,9 @@ body.lite .glass { border-radius: 0; }
 <script>
 // ===== TV Home config: edit the tiles, city and options below, push to GitHub, then reopen the app on the TV =====
 window.TVHOME_CONFIG = {
+  // App name shown on the home screen and in the page title.
+  name: "Kivo TV",
+ 
   // Weather widget (Open-Meteo, no API key needed). Change to your city.
   weather: { name: "Hradec Kralove", lat: 50.2104, lon: 15.8252 },
  
@@ -189,13 +204,14 @@ window.TVHOME_CONFIG = {
   // color: two gradient colors
   // icon:  optional image URL (otherwise the first letter is shown big)
   tiles: [
-    { name: "YouTube",  url: "https://www.youtube.com/tv",       color: ["#ff6a6a", "#b0173d"] },
-    { name: "Twitch",   url: "https://www.twitch.tv/",           color: ["#8f6bff", "#4527a8"] },
-    { name: "Plex",     url: "https://app.plex.tv/desktop/",     color: ["#ffb347", "#c26a00"] },
-    { name: "Jellyfin", url: "http://YOUR_SERVER_IP:8096/web/",  color: ["#4fc3f7", "#1565c0"] },
-    { name: "Spotify",  url: "https://open.spotify.com/",        color: ["#3ddc84", "#0b7a3e"] },
-    { name: "Windy",    url: "https://www.windy.com/",           color: ["#5ee1e6", "#1b6f9a"] },
-    { name: "Google",   url: "https://www.google.com/",          color: ["#8ab4f8", "#3b5fc4"] }
+    { name: "YouTube",     url: "https://www.youtube.com/tv",              color: ["#ff5a5a", "#a30f2d"], icon: "https://cdn.simpleicons.org/youtube/white",    domain: "youtube.com" },
+    { name: "Netflix",     url: "https://www.netflix.com/",                color: ["#e50914", "#6b0409"], icon: "https://cdn.simpleicons.org/netflix/white",    domain: "netflix.com" },
+    { name: "Prime Video", url: "https://www.primevideo.com/",             color: ["#1fa3ff", "#0b4a85"], icon: "https://cdn.simpleicons.org/primevideo/white", domain: "primevideo.com" },
+    { name: "Disney+",     url: "https://www.disneyplus.com/",             color: ["#2f6bff", "#0f2468"], icon: "https://cdn.simpleicons.org/disneyplus/white", domain: "disneyplus.com" },
+    { name: "Twitch",      url: "https://www.twitch.tv/",                  color: ["#9146ff", "#43199e"], icon: "https://cdn.simpleicons.org/twitch/white",     domain: "twitch.tv" },
+    { name: "Spotify",     url: "https://open.spotify.com/",               color: ["#1ed760", "#0a5f2c"], icon: "https://cdn.simpleicons.org/spotify/white",    domain: "spotify.com" },
+    { name: "Plex",        url: "https://app.plex.tv/desktop/",            color: ["#f0a90f", "#7a4f00"], icon: "https://cdn.simpleicons.org/plex/white",       domain: "plex.tv" },
+    { name: "iVysilani",   url: "https://www.ceskatelevize.cz/ivysilani/", color: ["#12a8c4", "#0b6b80"], domain: "ceskatelevize.cz" }
   ]
 };
 </script>
@@ -211,7 +227,7 @@ window.TVHOME_CONFIG = {
   function pad(n) { return (n < 10 ? "0" : "") + n; }
  
   var stage = $("stage"), home = $("home"), row = $("row");
-  var lastOffset = -1, lastHm = "", ready = false, focusIdx = 0, saverOn = false, lastActivity = Date.now();
+  var iconLog = {}, lastOffset = -1, lastHm = "", ready = false, focusIdx = 0, saverOn = false, lastActivity = Date.now();
  
   /* ---------- Fit 1920x1080 stage to the real screen ---------- */
   function fit() {
@@ -276,15 +292,34 @@ window.TVHOME_CONFIG = {
   /* ---------- Tiles ---------- */
   function buildTiles() {
     row.innerHTML = "";
+    function tag(s) { return s.indexOf("icons/") === 0 ? "local" : (s.indexOf("simpleicons") > -1 ? "logo" : "favicon"); }
+    function loadIcon(tile, t, srcs, i) {
+      if (i === 0) { iconLog[t.name] = ""; }
+      if (i >= srcs.length) { iconLog[t.name] += " -> letter"; mono(tile, t.name); return; }
+      var im = document.createElement("img");
+      if (srcs[i].indexOf("/s2/favicons") > -1) { im.className = "fav"; }
+      im.onload = function () { iconLog[t.name] += " ok:" + tag(srcs[i]); };
+      im.onerror = function () {
+        iconLog[t.name] += " x:" + tag(srcs[i]);
+        if (im.parentNode) { tile.removeChild(im); }
+        loadIcon(tile, t, srcs, i + 1);
+      };
+      im.src = srcs[i];
+      tile.appendChild(im);
+    }
+    function mono(tile, name) {
+      var m = document.createElement("div");
+      m.className = "mono"; m.textContent = name.charAt(0);
+      tile.appendChild(m);
+    }
     for (var i = 0; i < C.tiles.length; i++) {
       var t = C.tiles[i], d = document.createElement("div");
       d.className = "tile";
       d.style.background = "linear-gradient(135deg," + t.color[0] + "," + t.color[1] + ")";
-      if (t.icon) {
-        var im = document.createElement("img"); im.src = t.icon; d.appendChild(im);
-      } else {
-        var m = document.createElement("div"); m.className = "mono"; m.textContent = t.name.charAt(0); d.appendChild(m);
-      }
+      var srcs = ["icons/" + t.name.toLowerCase().replace(/[^a-z0-9]/g, "") + ".png"];
+      if (t.icon) { srcs.push(t.icon); }
+      if (t.domain) { srcs.push("https://www.google.com/s2/favicons?sz=256&domain=" + t.domain); }
+      if (srcs.length) { loadIcon(d, t, srcs, 0); } else { mono(d, t.name); }
       var n = document.createElement("div"); n.className = "nm"; n.textContent = t.name; d.appendChild(n);
       row.appendChild(d);
     }
@@ -303,7 +338,6 @@ window.TVHOME_CONFIG = {
       lastOffset = offset;
       row.style.webkitTransform = row.style.transform = "translateX(" + (-offset) + "px)";
     }
-    if (!silent && actx) { setTimeout(function () { blip(520 + i * 25, 0.07, 0.05); }, 0); }
   }
   function openTile() {
     var t = C.tiles[focusIdx];
@@ -429,11 +463,16 @@ window.TVHOME_CONFIG = {
     document.body.className = on ? "lite" : "";
     store("tvhome.lite", on ? "1" : "0");
   }
+  function iconReport() {
+    var s = "";
+    for (var k in iconLog) { if (iconLog.hasOwnProperty(k)) { s += "\n" + k + ":" + iconLog[k]; } }
+    return s;
+  }
   var debugOn = false;
   function debugLog(e) {
     var d = $("debug");
     d.style.display = debugOn ? "block" : "none";
-    if (debugOn) { d.textContent = "keyCode: " + e.keyCode + "\nkey: " + (e.key || "-") + "\nscreen: " + window.innerWidth + "x" + window.innerHeight; }
+    if (debugOn) { d.textContent = "keyCode: " + e.keyCode + "\nkey: " + (e.key || "-") + "\nscreen: " + window.innerWidth + "x" + window.innerHeight + iconReport(); }
   }
   document.addEventListener("keydown", function (e) {
     var k = e.keyCode;
@@ -447,6 +486,8 @@ window.TVHOME_CONFIG = {
     if (k === KEY.LEFT) { setFocus(focusIdx - 1); e.preventDefault(); }
     else if (k === KEY.RIGHT) { setFocus(focusIdx + 1); e.preventDefault(); }
     else if (k === KEY.ENTER) { openTile(); e.preventDefault(); }
+    else if (k === KEY.UP) { setWallpaper(wpIdx + 1, true); e.preventDefault(); }
+    else if (k === KEY.DOWN) { debugOn = !debugOn; debugLog(e); e.preventDefault(); }
     else if (k === KEY.RED || k === 87) { setWallpaper(wpIdx + 1, true); blip(660, 0.1, 0.05); e.preventDefault(); }
     else if (k === KEY.GREEN || k === 83) { showSaver(); e.preventDefault(); }
     else if (k === KEY.YELLOW || k === 82) { window.location.reload(); }
@@ -455,6 +496,12 @@ window.TVHOME_CONFIG = {
  
   /* ---------- Boot ---------- */
   if (C.lite || store("tvhome.lite") === "1" || /[?&]lite=1/.test(window.location.search)) { document.body.className = "lite"; }
+  document.title = C.name || "TV Home";
+  (function () {
+    var b = $("brand"), parts = (C.name || "").split(" "), tv = parts.length > 1 ? parts.pop() : "";
+    b.appendChild(document.createTextNode(parts.join(" ")));
+    if (tv) { var s = document.createElement("span"); s.className = "tv"; s.textContent = tv; b.appendChild(s); }
+  })();
   randomWallpaper();
   buildTiles();
   tick();
