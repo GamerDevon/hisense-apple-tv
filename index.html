@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Living Room</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #080a12;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 42px 65px 20px;
+}
+
+.brand {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.clock {
+  color: #ddd;
+  font-size: 19px;
+}
+
+main {
+  padding: 25px 65px;
+}
+
+.hero {
+  height: 340px;
+  border-radius: 22px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 80% 20%, #526b99 0%, transparent 55%),
+    linear-gradient(110deg, #18243c, #080c19);
+}
+
+.hero small {
+  color: #bdc9e4;
+  letter-spacing: 3px;
+  font-size: 12px;
+}
+
+.hero h1 {
+  font-size: 52px;
+  margin: 18px 0 8px;
+  letter-spacing: -2px;
+}
+
+.hero p {
+  color: #c2c9d6;
+  font-size: 17px;
+}
+
+.section-title {
+  margin: 35px 0 20px;
+  font-size: 23px;
+  font-weight: 600;
+}
+
+.apps {
+  display: flex;
+  gap: 23px;
+}
+
+.app {
+  width: 155px;
+  height: 125px;
+  border-radius: 17px;
+  background: #202638;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 38px;
+  border: 3px solid transparent;
+  transition: transform .16s, border-color .16s;
+}
+
+.app:focus,
+.app.selected {
+  outline: none;
+  border-color: white;
+  transform: scale(1.09);
+}
+
+.app-name {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 15px;
+  color: #d8dce5;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer {
+  position: absolute;
+  bottom: 25px;
+  left: 65px;
+  color: #777f91;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">Living Room</div>
+  <div class="clock" id="clock">--:--</div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <small>WELCOME HOME</small>
+    <h1>Your entertainment.</h1>
+    <p>Everything you love, all in one place.</p>
+  </section>
+
+  <div class="section-title">Your Apps</div>
+
+  <section class="apps">
+
+    <div class="tile">
+      <button class="app" data-name="Movies">▶</button>
+      <div class="app-name">Movies</div>
+    </div>
+
+    <div class="tile">
+      <button class="app" data-name="Music">♫</button>
+      <div class="app-name">Music</div>
+    </div>
+
+    <div class="tile">
+      <button class="app" data-name="Photos">▧</button>
+      <div class="app-name">Photos</div>
+    </div>
+
+    <div class="tile">
+      <button class="app" data-name="Settings">⚙</button>
+      <div class="app-name">Settings</div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  HISENSE EDITION · BUILD 001
+</footer>
+
+<script>
+function updateClock() {
+  var now = new Date();
+
+  document.getElementById("clock").textContent =
+    now.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+var apps = document.querySelectorAll(".app");
+var selected = 0;
+
+function focusApp(index) {
+  if (index < 0) index = 0;
+  if (index >= apps.length) index = apps.length - 1;
+
+  selected = index;
+  apps[selected].focus();
+}
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "ArrowRight") {
+    event.preventDefault();
+    focusApp(selected + 1);
+  }
+
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    focusApp(selected - 1);
+  }
+
+  if (event.key === "Enter") {
+    event.preventDefault();
+    apps[selected].click();
+  }
+});
+
+apps.forEach(function(app) {
+  app.addEventListener("click", function() {
+    // Temporary test interaction.
+    // No TV settings or system files are changed.
+    alert(app.getAttribute("data-name") +
+      " will be added in a future build.");
+  });
+});
+
+focusApp(0);
+</script>
+
+</body>
+</html>
