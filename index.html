@@ -71,12 +71,9 @@ html, body {
   position: absolute; left: 0; top: 0; width: 100%; height: 100%;
   font-size: 120px; font-weight: 700; line-height: 214px; text-align: center; opacity: .92;
 }
-.tile img { position: absolute; left: 50%; top: 46%; width: 150px; height: 90px; object-fit: contain; -webkit-transform: translate(-50%,-55%); transform: translate(-50%,-55%); }
-.tile img.fav { top: 44%; width: 112px; height: 112px; padding: 14px; background: #fff; border-radius: 26px; }
-.tile .nm {
-  position: absolute; left: 0; bottom: 0; width: 100%; padding: 14px 22px; font-size: 26px; font-weight: 600;
-  background: linear-gradient(to top, rgba(0,0,0,.5), rgba(0,0,0,0));
-}
+.tile img { position: absolute; left: 50%; top: 50%; width: 62%; height: 64%; object-fit: contain; -webkit-transform: translate(-50%,-50%); transform: translate(-50%,-50%); }
+.tile img.fav { width: 156px; height: 156px; padding: 18px; background: #fff; border-radius: 36px; }
+#label { position: absolute; top: 246px; width: 380px; margin-left: -190px; text-align: center; font-size: 28px; font-weight: 600; line-height: 34px; white-space: nowrap; }
 .tile.focus {
   -webkit-transform: translateY(-14px) scale(1.14); transform: translateY(-14px) scale(1.14);
   box-shadow: 0 0 0 4px rgba(255,255,255,.9);
@@ -187,7 +184,7 @@ window.TVHOME_CONFIG = {
   name: "Kivo TV",
  
   // Weather widget (Open-Meteo, no API key needed). Change to your city.
-  weather: { name: "Hradec Kralove", lat: 50.2104, lon: 15.8252 },
+  weather: { name: "Hradec Králové", lat: 50.2104, lon: 15.8252 },
  
   // Idle time before the clock screensaver starts.
   saverAfterSec: 120,
@@ -211,7 +208,7 @@ window.TVHOME_CONFIG = {
     { name: "Twitch",      url: "https://www.twitch.tv/",                  color: ["#9146ff", "#43199e"], icon: "https://cdn.simpleicons.org/twitch/white",     domain: "twitch.tv" },
     { name: "Spotify",     url: "https://open.spotify.com/",               color: ["#1ed760", "#0a5f2c"], icon: "https://cdn.simpleicons.org/spotify/white",    domain: "spotify.com" },
     { name: "Plex",        url: "https://app.plex.tv/desktop/",            color: ["#f0a90f", "#7a4f00"], icon: "https://cdn.simpleicons.org/plex/white",       domain: "plex.tv" },
-    { name: "iVysilani",   url: "https://www.ceskatelevize.cz/ivysilani/", color: ["#12a8c4", "#0b6b80"], domain: "ceskatelevize.cz" }
+    { name: "iVysílání", slug: "ivysilani",   url: "https://www.ceskatelevize.cz/ivysilani/", color: ["#12a8c4", "#0b6b80"], domain: "ceskatelevize.cz" }
   ]
 };
 </script>
@@ -316,22 +313,24 @@ window.TVHOME_CONFIG = {
       var t = C.tiles[i], d = document.createElement("div");
       d.className = "tile";
       d.style.background = "linear-gradient(135deg," + t.color[0] + "," + t.color[1] + ")";
-      var srcs = ["icons/" + t.name.toLowerCase().replace(/[^a-z0-9]/g, "") + ".png"];
+      var srcs = ["icons/" + (t.slug || t.name.toLowerCase().replace(/[^a-z0-9]/g, "")) + ".png"];
       if (t.icon) { srcs.push(t.icon); }
       if (t.domain) { srcs.push("https://www.google.com/s2/favicons?sz=256&domain=" + t.domain); }
       if (srcs.length) { loadIcon(d, t, srcs, 0); } else { mono(d, t.name); }
-      var n = document.createElement("div"); n.className = "nm"; n.textContent = t.name; d.appendChild(n);
       row.appendChild(d);
     }
+    var lb = document.createElement("div"); lb.id = "label"; row.appendChild(lb);
     setFocus(0, true);
   }
   function setFocus(i, silent) {
     var tiles = row.children;
     if (!tiles.length) { return; }
-    i = Math.max(0, Math.min(tiles.length - 1, i));
+    i = Math.max(0, Math.min(C.tiles.length - 1, i));
     if (tiles[focusIdx]) { tiles[focusIdx].className = "tile"; }
     focusIdx = i;
     tiles[i].className = "tile focus";
+    var lb = $("label");
+    if (lb) { lb.textContent = C.tiles[i].name; lb.style.left = (i * 410 + 190) + "px"; }
     var step = 380 + 30;
     var offset = Math.max(0, (i + 1) * step + 120 - 1700);
     if (offset !== lastOffset) {
