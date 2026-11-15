@@ -57,7 +57,7 @@ html, body {
 .dim { opacity: .65; font-size: 22px; }
  
 /* Tile row */
-#rowwrap { position: absolute; left: 0; top: 300px; width: 100%; height: 300px; }
+#rowwrap { position: absolute; left: 0; top: 340px; width: 100%; height: 300px; }
 #row {
   position: absolute; left: 120px; top: 40px; white-space: nowrap; font-size: 0;
   transition: -webkit-transform .25s ease-out, transform .25s ease-out;
@@ -88,7 +88,7 @@ html, body {
 }
  
 /* Recently opened row (small tiles) */
-#recent { position: absolute; left: 120px; top: 640px; width: 1680px; height: 240px; }
+#recent { position: absolute; left: 120px; top: 700px; width: 1680px; height: 240px; }
 .sec { font-size: 20px; letter-spacing: 3px; text-transform: uppercase; opacity: .7; }
 #rrow { position: absolute; left: 0; top: 48px; white-space: nowrap; font-size: 0; }
 #rlabel { position: absolute; top: 150px; width: 240px; margin-left: -120px; text-align: center; font-size: 24px; font-weight: 600; line-height: 30px; white-space: nowrap; }
@@ -98,18 +98,29 @@ html, body {
 .tile.sm img.fav { width: 92px; height: 92px; padding: 12px; border-radius: 22px; }
 .tile.sm.focus { -webkit-transform: translateY(-8px) scale(1.1); transform: translateY(-8px) scale(1.1); box-shadow: 0 16px 28px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.3); }
  
-/* Settings row (pills) */
-#settings { position: absolute; left: 120px; top: 898px; white-space: nowrap; font-size: 0; }
-.pill {
-  display: inline-block; vertical-align: top; width: 260px; height: 76px; margin-right: 16px; padding: 12px 20px 0;
-  border-radius: 24px; overflow: hidden; white-space: nowrap;
-  background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.04)), rgba(18,24,40,.40);
-  border: 1px solid rgba(255,255,255,.18); border-top-color: rgba(255,255,255,.38);
-  transition: -webkit-transform .2s ease-out, transform .2s ease-out;
-}
-.pill .pn { font-size: 16px; letter-spacing: 2px; text-transform: uppercase; opacity: .6; line-height: 22px; }
-.pill .pv { font-size: 26px; font-weight: 600; line-height: 34px; }
-.pill.focus { background: rgba(255,255,255,.92); color: #111; -webkit-transform: scale(1.06); transform: scale(1.06); }
+/* Settings tile + tvOS-style settings app */
+.tile .gear { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; }
+#panelwrap { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #0c1019 0%, #05070b 100%); }
+#panelwrap.on { display: block; }
+#spage, #sdetail { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+#sdetail { display: none; }
+#stitle { position: absolute; left: 0; top: 80px; width: 100%; text-align: center; font-size: 40px; font-weight: 700; }
+#slist { position: absolute; left: 560px; top: 200px; width: 800px; }
+.srow { position: relative; height: 92px; margin-bottom: 10px; padding: 0 28px; border-radius: 24px; background: rgba(255,255,255,.08); font-size: 30px; font-weight: 600; line-height: 92px; white-space: nowrap; }
+.srow .sv { float: right; font-weight: 500; opacity: .6; }
+.srow.main { height: 104px; line-height: 104px; padding-left: 112px; }
+.srow.main .sico { position: absolute; left: 20px; top: 20px; }
+.srow.main .chev { position: absolute; right: 36px; top: 40px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
+.srow.focus { background: rgba(255,255,255,.94); color: #111; }
+.srow.focus .sv { opacity: .6; }
+.sico { width: 64px; height: 64px; padding: 12px; border-radius: 16px; line-height: 0; }
+.sico svg { display: block; }
+#sleft { position: absolute; left: 140px; top: 250px; width: 640px; text-align: center; }
+#sicon { width: 200px; height: 200px; padding: 44px; border-radius: 48px; margin: 0 auto 34px; }
+#sname { font-size: 56px; font-weight: 700; }
+#sdesc { margin-top: 16px; font-size: 26px; line-height: 36px; opacity: .6; }
+#sright { position: absolute; left: 900px; top: 160px; width: 880px; }
+#phint { position: absolute; left: 0; bottom: 36px; width: 100%; text-align: center; font-size: 20px; opacity: .5; }
  
 /* Hint bar */
 #hints {
@@ -157,13 +168,14 @@ html, body {
   font-size: 20px; letter-spacing: 2px; text-transform: uppercase;
 }
  
+#ver { position: absolute; right: 24px; bottom: 20px; font-size: 16px; letter-spacing: 1px; opacity: .4; }
+ 
 /* Lite mode: zero animation, minimal painting. Toggle with key 1, or open the app URL with ?lite=1 */
 body.lite * { transition: none !important; animation: none !important; }
 body.lite #shade { display: none; }
 body.lite .tile { border-radius: 0; will-change: auto; }
 body.lite .tile.focus { -webkit-transform: none; transform: none; }
 body.lite .glass { border-radius: 0; }
-body.lite .pill.focus { -webkit-transform: none; transform: none; }
 body.lite .tile::before, body.lite .tile::after { display: none; }
 body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
 </style>
@@ -190,7 +202,7 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
       <div class="glass widget" id="w-wall">
         <div class="w-title">Wallpaper</div>
         <div class="w-big small" id="w-wname">-</div>
-        <div class="w-sub dim">Change it in Settings below</div>
+        <div class="w-sub dim">Change it in Settings</div>
       </div>
     </div>
  
@@ -204,8 +216,6 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
       <div id="rempty">Apps you open will show up here</div>
     </div>
  
-    <div id="settings"></div>
- 
     <div id="hints" class="glass">
       <span><b>&#9664; &#9654;</b> Browse</span>
       <span><b>&#9650; &#9660;</b> Rows</span>
@@ -213,10 +223,23 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
     </div>
   </div>
  
+  <div id="panelwrap">
+    <div id="spage">
+      <div id="stitle">Settings</div>
+      <div id="slist"></div>
+    </div>
+    <div id="sdetail">
+      <div id="sleft"><div id="sicon" class="sico"></div><div id="sname"></div><div id="sdesc"></div></div>
+      <div id="sright"></div>
+    </div>
+    <div id="phint">&#9650; &#9660; Move &nbsp;&nbsp; OK Select &nbsp;&nbsp; Back Return</div>
+  </div>
+ 
   <div id="saver"><div id="saverclock">--:--</div></div>
  
   <div id="splash"><canvas id="blob" width="300" height="300"></canvas></div>
   <div id="debug"></div>
+  <div id="ver"></div>
 </div>
  
 <script>
@@ -224,6 +247,9 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
 window.TVHOME_CONFIG = {
   // App name shown on the home screen and in the page title.
   name: "Kivo TV",
+ 
+  // Shown bottom-right and in the Info panel, so you can tell which file the TV is really running.
+  version: "0.6",
  
   // Weather widget (Open-Meteo, no API key needed). Change to your city.
   weather: { name: "Hradec Králové", lat: 50.2104, lon: 15.8252 },
@@ -233,9 +259,6 @@ window.TVHOME_CONFIG = {
  
   // Lite mode: no animations at all. Also toggled with key 1 on the remote, or add ?lite=1 to the app URL.
   lite: false,
- 
-  // UI blips on move / select. Off by default: audio can make key presses lag on weak TVs.
-  sounds: false,
  
   // Tiles. Each one opens its URL in the TV browser engine.
   // name:  label under the tile
@@ -260,10 +283,31 @@ window.TVHOME_CONFIG = {
 (function () {
   "use strict";
  
+  var errLog = [];
+  window.onerror = function (msg, src, line) {
+    errLog.push(String(msg).slice(0, 60) + " (line " + line + ")");
+    if (errLog.length > 4) { errLog.shift(); }
+    return false;
+  };
+ 
   var C = window.TVHOME_CONFIG || { tiles: [], weather: { name: "", lat: 50, lon: 15 }, saverAfterSec: 120, sounds: true };
   function $(id) { return document.getElementById(id); }
   function store(k, v) { try { if (v === undefined) { return localStorage.getItem(k); } localStorage.setItem(k, v); } catch (e) {} return null; }
   function pad(n) { return (n < 10 ? "0" : "") + n; }
+ 
+  /* Saved settings (kept in the TV browser's storage) */
+  var S = { clock24: true, tempF: false, wpKeep: false, sound: 0, saver: C.saverAfterSec || 120 };
+  try {
+    var saved = JSON.parse(store("tvhome.settings") || "{}");
+    for (var sk in saved) { if (saved.hasOwnProperty(sk)) { S[sk] = saved[sk]; } }
+  } catch (e) {}
+  function saveSettings() { store("tvhome.settings", JSON.stringify(S)); }
+  var lastW = null;
+  function fmtTime(d) {
+    var hr = d.getHours();
+    if (S.clock24) { return pad(hr) + ":" + pad(d.getMinutes()); }
+    return ((hr % 12) || 12) + ":" + pad(d.getMinutes()) + (hr < 12 ? " AM" : " PM");
+  }
  
   var stage = $("stage"), home = $("home"), row = $("row");
   var iconLog = {}, lastOffset = -1, lastHm = "", ready = false, saverOn = false, lastActivity = Date.now();
@@ -307,14 +351,15 @@ window.TVHOME_CONFIG = {
   }
   function randomWallpaper() { // different one on every launch
     var last = parseInt(store("tvhome.wp"), 10);
+    if (S.wpKeep && !isNaN(last) && last >= 0 && last < WALLPAPERS.length) { setWallpaper(last, false); return; }
     var i; do { i = Math.floor(Math.random() * WALLPAPERS.length); } while (i === last && WALLPAPERS.length > 1);
     setWallpaper(i, false);
   }
  
   /* ---------- Sounds (WebAudio blips) ---------- */
   var actx = null;
-  function ensureAudio() {
-    if (!C.sounds || actx) { return; }
+  function ensureAudio(force) {
+    if ((!S.sound && !force) || actx) { return; }
     try { var A = window.AudioContext || window.webkitAudioContext; if (A) { actx = new A(); } } catch (e) { actx = null; }
   }
   function blip(freq, dur, vol) {
@@ -329,8 +374,11 @@ window.TVHOME_CONFIG = {
     } catch (e) {}
   }
  
+  function navBlip() { if (S.sound === 2) { blip(520, 0.06, 0.05); } }
+ 
   /* ---------- Rows: apps, recently opened, settings ---------- */
-  var rowsEls = [[], [], []], rowIdx = 0, idxs = [0, 0, 0], focusEl = null, recentTiles = [], pillEls = [];
+  var rowsEls = [[], []], rowIdx = 0, idxs = [0, 0], focusEl = null, recentTiles = [], panelOpen = false;
+  var APPS = C.tiles.concat([{ name: "Settings", settings: true, color: ["#9aa3b5", "#3d4455"] }]);
   var RECENT_MAX = 6;
  
   function tag(s) { return s.indexOf("icons/") === 0 ? "local" : (s.indexOf("simpleicons") > -1 ? "logo" : "favicon"); }
@@ -357,6 +405,13 @@ window.TVHOME_CONFIG = {
     var d = document.createElement("div");
     d.className = small ? "tile sm" : "tile";
     d.style.background = "linear-gradient(135deg," + t.color[0] + "," + t.color[1] + ")";
+    if (t.settings) {
+      var g = document.createElement("div");
+      g.className = "gear";
+      g.innerHTML = "<svg width='120' height='120' viewBox='0 0 100 100'><circle cx='50' cy='50' r='37' fill='none' stroke='#fff' stroke-width='12' stroke-dasharray='9.7 9.7'/><circle cx='50' cy='50' r='26' fill='none' stroke='#fff' stroke-width='12'/></svg>";
+      d.appendChild(g);
+      return d;
+    }
     var srcs = ["icons/" + (t.slug || t.name.toLowerCase().replace(/[^a-z0-9]/g, "")) + ".png"];
     if (t.icon) { srcs.push(t.icon); }
     if (t.domain) { srcs.push("https://www.google.com/s2/favicons?sz=256&domain=" + t.domain); }
@@ -367,8 +422,8 @@ window.TVHOME_CONFIG = {
   function buildTiles() {
     row.innerHTML = "";
     rowsEls[0] = [];
-    for (var i = 0; i < C.tiles.length; i++) {
-      var d = makeTile(C.tiles[i], false);
+    for (var i = 0; i < APPS.length; i++) {
+      var d = makeTile(APPS[i], false);
       row.appendChild(d);
       rowsEls[0].push(d);
     }
@@ -413,36 +468,138 @@ window.TVHOME_CONFIG = {
     refreshFocus();
   }
  
-  /* Settings pills */
-  var SETTINGS = [
-    { name: "Wallpaper",   val: function () { return WALLPAPERS[wpIdx].name; }, run: function () { setWallpaper(wpIdx + 1, true); } },
-    { name: "Animations",  val: function () { return document.body.className === "lite" ? "Off" : "On"; }, run: function () { setLite(document.body.className !== "lite"); } },
-    { name: "Screensaver", val: "Start", run: function () { showSaver(); } },
-    { name: "Info panel",  val: function () { return debugOn ? "Hide" : "Show"; }, run: function () { debugOn = !debugOn; debugLog({ keyCode: "-" }); } },
-    { name: "Reload",      val: "Now", run: function () { window.location.reload(); } },
-    { name: "Recent",      val: "Clear", run: function () { store("tvhome.recent", "[]"); buildRecent(); } }
-  ];
-  function updateSettings() {
-    for (var i = 0; i < pillEls.length; i++) {
-      var v = SETTINGS[i].val;
-      pillEls[i].textContent = (typeof v === "function") ? v() : v;
-    }
+  /* ---------- Settings app (tvOS style): categories, then options ---------- */
+  var SCR = { page: -1, idx: 0, mainIdx: 0 };
+  var settingsEls = [], settingsVals = [], settingsBase = "srow", flashUntil = 0, resetArmed = false;
+  var SAVER_VALS = [60, 120, 300, 600, 0];
+  var ICONS = {
+    gear: "<svg width='100%' height='100%' viewBox='0 0 100 100'><circle cx='50' cy='50' r='37' fill='none' stroke='#fff' stroke-width='12' stroke-dasharray='9.7 9.7'/><circle cx='50' cy='50' r='26' fill='none' stroke='#fff' stroke-width='12'/></svg>",
+    half: "<svg width='100%' height='100%' viewBox='0 0 100 100'><circle cx='50' cy='50' r='34' fill='none' stroke='#fff' stroke-width='8'/><path d='M50 16a34 34 0 0 1 0 68z' fill='#fff'/></svg>",
+    speaker: "<svg width='100%' height='100%' viewBox='0 0 100 100'><path d='M14 38h16l22-18v60L30 62H14z' fill='#fff'/><path d='M64 36q14 14 0 28' fill='none' stroke='#fff' stroke-width='8' stroke-linecap='round'/><path d='M74 24q24 26 0 52' fill='none' stroke='#fff' stroke-width='8' stroke-linecap='round'/></svg>",
+    screen: "<svg width='100%' height='100%' viewBox='0 0 100 100'><rect x='12' y='22' width='76' height='50' rx='8' fill='none' stroke='#fff' stroke-width='8'/><path d='M36 86h28' stroke='#fff' stroke-width='8' stroke-linecap='round'/></svg>",
+    info: "<svg width='100%' height='100%' viewBox='0 0 100 100'><circle cx='50' cy='50' r='36' fill='none' stroke='#fff' stroke-width='8'/><circle cx='50' cy='32' r='5' fill='#fff'/><path d='M50 46v26' stroke='#fff' stroke-width='9' stroke-linecap='round'/></svg>"
+  };
+  function wpNames() { var a = []; for (var i = 0; i < WALLPAPERS.length; i++) { a.push(WALLPAPERS[i].name); } return a; }
+  function saverIdx() { for (var i = 0; i < SAVER_VALS.length; i++) { if (SAVER_VALS[i] === S.saver) { return i; } } return 1; }
+  function browserName() {
+    var ua = navigator.userAgent || "", m;
+    m = /VIDAA[\/ ]?([\d.]+)?/i.exec(ua); if (m) { return "VIDAA" + (m[1] ? " " + m[1] : ""); }
+    m = /Chrome\/(\d+)/.exec(ua); if (m) { return "Chrome " + m[1]; }
+    m = /Firefox\/(\d+)/.exec(ua); if (m) { return "Firefox " + m[1]; }
+    m = /Version\/([\d.]+).*Safari/.exec(ua); if (m) { return "Safari " + m[1]; }
+    return ua.slice(0, 24) || "Unknown";
   }
-  function buildSettings() {
-    var s = $("settings");
-    s.innerHTML = "";
-    pillEls = [];
-    rowsEls[2] = [];
-    for (var i = 0; i < SETTINGS.length; i++) {
-      var p = document.createElement("div"); p.className = "pill";
-      var n = document.createElement("div"); n.className = "pn"; n.textContent = SETTINGS[i].name;
-      var v = document.createElement("div"); v.className = "pv";
-      p.appendChild(n); p.appendChild(v);
-      s.appendChild(p);
-      pillEls.push(v);
-      rowsEls[2].push(p);
+ 
+  var CATS = [
+    { name: "General", color: "#8e8e93", icon: "gear", desc: "Clock, units and app controls.", items: [
+      { name: "Time format", opts: ["24-hour", "12-hour"], get: function () { return S.clock24 ? 0 : 1; }, set: function (i) { S.clock24 = (i === 0); saveSettings(); lastHm = ""; tick(); } },
+      { name: "Temperature", opts: ["Celsius", "Fahrenheit"], get: function () { return S.tempF ? 1 : 0; }, set: function (i) { S.tempF = (i === 1); saveSettings(); if (lastW) { showWeather(lastW.t, lastW.c); } } },
+      { name: "Reload app", val: "Now", run: function () { window.location.reload(); } },
+      { name: "Recently opened", val: function () { return Date.now() < flashUntil ? "Cleared" : "Clear"; }, run: function () { store("tvhome.recent", "[]"); buildRecent(); flashUntil = Date.now() + 3000; setTimeout(updateSettings, 3100); } },
+      { name: "Reset all settings", val: function () { return resetArmed ? "Press OK again" : "Reset"; }, run: function () {
+          if (!resetArmed) { resetArmed = true; setTimeout(function () { resetArmed = false; updateSettings(); }, 4000); return; }
+          store("tvhome.settings", "{}"); store("tvhome.lite", "0"); store("tvhome.recent", "[]"); window.location.reload();
+        } }
+    ] },
+    { name: "Appearance", color: "#5e5ce6", icon: "half", desc: "Wallpaper and animations.", items: [
+      { name: "Wallpaper", opts: wpNames(), get: function () { return wpIdx; }, set: function (i) { setWallpaper(i, true); } },
+      { name: "Wallpaper on launch", opts: ["Random", "Keep current"], get: function () { return S.wpKeep ? 1 : 0; }, set: function (i) { S.wpKeep = (i === 1); saveSettings(); } },
+      { name: "Animations", opts: ["On", "Off"], get: function () { return document.body.className === "lite" ? 1 : 0; }, set: function (i) { setLite(i === 1); } }
+    ] },
+    { name: "Sounds", color: "#ff375f", icon: "speaker", desc: "Optional click sounds when you move around or open apps.", items: [
+      { name: "UI sounds", opts: ["Off", "Select only", "All"], get: function () { return S.sound; }, set: function (i) { S.sound = i; saveSettings(); ensureAudio(); } },
+      { name: "Test sound", val: "Play", run: function () { ensureAudio(true); blip(880, 0.12, 0.07); } }
+    ] },
+    { name: "Screen Saver", color: "#0a84ff", icon: "screen", desc: "A moving clock appears after a while without any key presses.", items: [
+      { name: "Start after", opts: ["1 minute", "2 minutes", "5 minutes", "10 minutes", "Never"], get: saverIdx, set: function (i) { S.saver = SAVER_VALS[i]; saveSettings(); } },
+      { name: "Start now", val: "Start", run: function () { closePanel(); showSaver(); } }
+    ] },
+    { name: "About", color: "#636366", icon: "info", desc: "Details about this app and the browser it runs in.", items: [
+      { name: "App", info: true, val: function () { return C.name || "TV Home"; } },
+      { name: "Version", info: true, val: function () { return "v" + (C.version || "?"); } },
+      { name: "Display", info: true, val: function () { return window.innerWidth + " x " + window.innerHeight; } },
+      { name: "Browser", info: true, val: function () { return browserName(); } },
+      { name: "Network", info: true, val: function () { return navigator.onLine === false ? "Offline" : "Online"; } },
+      { name: "Debug box", opts: ["Hidden", "Shown"], get: function () { return debugOn ? 1 : 0; }, set: function (i) { debugOn = (i === 1); debugLog({ keyCode: "-" }); } }
+    ] }
+  ];
+ 
+  function itemVal(it) {
+    if (it.opts) { return it.opts[it.get()]; }
+    var v = it.val;
+    return (typeof v === "function") ? v() : (v || "");
+  }
+  function mk(tagName, cls) { var e = document.createElement(tagName); if (cls) { e.className = cls; } return e; }
+  function paintSettings() {
+    for (var i = 0; i < settingsEls.length; i++) { settingsEls[i].className = settingsBase + (i === SCR.idx ? " focus" : ""); }
+  }
+  function updateSettings() {
+    if (!panelOpen || SCR.page < 0) { return; }
+    var items = CATS[SCR.page].items;
+    for (var i = 0; i < settingsVals.length; i++) { settingsVals[i].textContent = itemVal(items[i]); }
+  }
+  function showMain() {
+    SCR.page = -1; SCR.idx = SCR.mainIdx; settingsBase = "srow main";
+    $("sdetail").style.display = "none";
+    $("spage").style.display = "block";
+    var list = $("slist");
+    list.innerHTML = "";
+    settingsEls = []; settingsVals = [];
+    for (var i = 0; i < CATS.length; i++) {
+      var r = mk("div", "srow main"), ic = mk("div", "sico");
+      ic.style.background = CATS[i].color;
+      ic.innerHTML = ICONS[CATS[i].icon];
+      r.appendChild(ic);
+      r.appendChild(document.createTextNode(CATS[i].name));
+      r.appendChild(mk("span", "chev"));
+      list.appendChild(r);
+      settingsEls.push(r);
+    }
+    paintSettings();
+  }
+  function showCat(ci) {
+    SCR.mainIdx = SCR.idx; SCR.page = ci; SCR.idx = 0; resetArmed = false; settingsBase = "srow";
+    var c = CATS[ci];
+    $("spage").style.display = "none";
+    $("sdetail").style.display = "block";
+    $("sicon").style.background = c.color;
+    $("sicon").innerHTML = ICONS[c.icon];
+    $("sname").textContent = c.name;
+    $("sdesc").textContent = c.desc;
+    var rt = $("sright");
+    rt.innerHTML = "";
+    settingsEls = []; settingsVals = [];
+    for (var i = 0; i < c.items.length; i++) {
+      var r = mk("div", "srow"), v = mk("span", "sv");
+      r.appendChild(v);
+      r.appendChild(document.createTextNode(c.items[i].name));
+      rt.appendChild(r);
+      settingsEls.push(r);
+      settingsVals.push(v);
     }
     updateSettings();
+    paintSettings();
+  }
+  function openPanel() { panelOpen = true; SCR.mainIdx = 0; showMain(); $("panelwrap").className = "on"; }
+  function closePanel() { panelOpen = false; resetArmed = false; $("panelwrap").className = ""; }
+  function stepItem(it, d) { var n = it.opts.length; it.set((it.get() + d + n) % n); updateSettings(); }
+  function settingsKey(k) {
+    var n = SCR.page < 0 ? CATS.length : CATS[SCR.page].items.length;
+    if (k === KEY.UP) { SCR.idx = Math.max(0, SCR.idx - 1); paintSettings(); navBlip(); }
+    else if (k === KEY.DOWN) { SCR.idx = Math.min(n - 1, SCR.idx + 1); paintSettings(); navBlip(); }
+    else if (SCR.page < 0) {
+      if (k === KEY.ENTER) { showCat(SCR.idx); }
+      else if (isBack(k)) { closePanel(); }
+    } else {
+      var it = CATS[SCR.page].items[SCR.idx];
+      if (k === KEY.LEFT && it.opts) { stepItem(it, -1); }
+      else if (k === KEY.RIGHT && it.opts) { stepItem(it, 1); }
+      else if (k === KEY.ENTER) {
+        if (it.opts) { stepItem(it, 1); }
+        else if (it.run) { it.run(); updateSettings(); }
+      }
+      else if (isBack(k)) { showMain(); }
+    }
   }
  
   /* Focus handling: only the focused element's class changes */
@@ -453,7 +610,7 @@ window.TVHOME_CONFIG = {
     focusEl = el;
     var a = $("label"), r = $("rlabel");
     if (a) {
-      if (rowIdx === 0 && C.tiles[idxs[0]]) { a.textContent = C.tiles[idxs[0]].name; a.style.left = (idxs[0] * 410 + 190) + "px"; }
+      if (rowIdx === 0 && APPS[idxs[0]]) { a.textContent = APPS[idxs[0]].name; a.style.left = (idxs[0] * 410 + 190) + "px"; }
       else { a.textContent = ""; }
     }
     if (r) {
@@ -466,24 +623,25 @@ window.TVHOME_CONFIG = {
       row.style.webkitTransform = row.style.transform = "translateX(" + (-offset) + "px)";
     }
   }
-  function rowCount(r) { return r === 0 ? C.tiles.length : (r === 1 ? recentTiles.length : SETTINGS.length); }
+  function rowCount(r) { return r === 0 ? APPS.length : recentTiles.length; }
   function moveCol(d) {
     var i = Math.max(0, Math.min(rowCount(rowIdx) - 1, idxs[rowIdx] + d));
-    if (i !== idxs[rowIdx]) { idxs[rowIdx] = i; refreshFocus(); }
+    if (i !== idxs[rowIdx]) { idxs[rowIdx] = i; refreshFocus(); navBlip(); }
   }
   function moveRow(d) {
     var r = rowIdx + d;
-    while (r >= 0 && r <= 2 && rowCount(r) === 0) { r += d; }
-    if (r < 0 || r > 2) { return; }
+    while (r >= 0 && r <= 1 && rowCount(r) === 0) { r += d; }
+    if (r < 0 || r > 1) { return; }
     rowIdx = r;
     refreshFocus();
+    navBlip();
   }
   function activate() {
-    if (rowIdx === 2) { SETTINGS[idxs[2]].run(); updateSettings(); return; }
-    var t = rowIdx === 0 ? C.tiles[idxs[0]] : recentTiles[idxs[1]];
+    var t = rowIdx === 0 ? APPS[idxs[0]] : recentTiles[idxs[1]];
     if (!t) { return; }
+    if (t.settings) { openPanel(); return; }
     pushRecent(t.name);
-    blip(880, 0.12, 0.07);
+    if (S.sound >= 1) { blip(880, 0.12, 0.07); }
     setTimeout(function () { window.location.href = t.url; }, 140);
   }
  
@@ -491,14 +649,14 @@ window.TVHOME_CONFIG = {
   var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   function tick() {
-    var d = new Date(), hm = pad(d.getHours()) + ":" + pad(d.getMinutes());
+    var d = new Date(), hm = fmtTime(d);
     if (hm !== lastHm) {
       lastHm = hm;
       $("clock").textContent = hm;
       $("saverclock").textContent = hm;
       $("date").textContent = DAYS[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()];
     }
-    if (!saverOn && Date.now() - lastActivity > C.saverAfterSec * 1000 && ready) { showSaver(); }
+    if (!saverOn && S.saver > 0 && ready && Date.now() - lastActivity > S.saver * 1000) { showSaver(); }
   }
  
   /* ---------- Screensaver ---------- */
@@ -532,7 +690,8 @@ window.TVHOME_CONFIG = {
     return "-";
   }
   function showWeather(t, code) {
-    $("w-temp").innerHTML = Math.round(t) + "&deg;";
+    lastW = { t: t, c: code };
+    $("w-temp").innerHTML = Math.round(S.tempF ? t * 9 / 5 + 32 : t) + "&deg;" + (S.tempF ? "F" : "C");
     $("w-desc").textContent = codeText(code);
     $("w-place").textContent = C.weather.name;
   }
@@ -614,7 +773,7 @@ window.TVHOME_CONFIG = {
   function debugLog(e) {
     var d = $("debug");
     d.style.display = debugOn ? "block" : "none";
-    if (debugOn) { d.textContent = "keyCode: " + e.keyCode + "\nkey: " + (e.key || "-") + "\nscreen: " + window.innerWidth + "x" + window.innerHeight + iconReport(); }
+    if (debugOn) { d.textContent = "Kivo TV v" + (C.version || "?") + "\nkeyCode: " + e.keyCode + "\nkey: " + (e.key || "-") + "\nscreen: " + window.innerWidth + "x" + window.innerHeight + "\nerrors: " + (errLog.length ? "\n  " + errLog.join("\n  ") : "none") + iconReport(); }
   }
   document.addEventListener("keydown", function (e) {
     var k = e.keyCode;
@@ -625,6 +784,7 @@ window.TVHOME_CONFIG = {
     if (debugOn || k === KEY.BLUE || k === 68) { debugLog(e); }
     if (saverOn) { hideSaver(); e.preventDefault(); return; }
     if (!ready) { return; }
+    if (panelOpen) { settingsKey(k); e.preventDefault(); return; }
     if (k === KEY.LEFT) { moveCol(-1); e.preventDefault(); }
     else if (k === KEY.RIGHT) { moveCol(1); e.preventDefault(); }
     else if (k === KEY.UP) { moveRow(-1); e.preventDefault(); }
@@ -639,6 +799,7 @@ window.TVHOME_CONFIG = {
   /* ---------- Boot ---------- */
   if (C.lite || store("tvhome.lite") === "1" || /[?&]lite=1/.test(window.location.search)) { document.body.className = "lite"; }
   document.title = C.name || "TV Home";
+  $("ver").textContent = "v" + (C.version || "?");
   (function () {
     var b = $("brand"), parts = (C.name || "").split(" "), tv = parts.length > 1 ? parts.pop() : "";
     b.appendChild(document.createTextNode(parts.join(" ")));
@@ -646,7 +807,6 @@ window.TVHOME_CONFIG = {
   })();
   randomWallpaper();
   buildTiles();
-  buildSettings();
   buildRecent();
   window.addEventListener("pageshow", function (ev) { if (ev.persisted) { buildRecent(); } });
   tick();
