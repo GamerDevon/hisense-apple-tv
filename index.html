@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,22 +13,22 @@ html, body {
   width: 100%; height: 100%; overflow: hidden; background: #000; color: #fff;
   font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
- 
+
 /* The whole UI is drawn on a fixed 1920x1080 stage and scaled to the screen. */
 #stage {
   position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
   transform-origin: 0 0; overflow: hidden; background: #000;
 }
- 
+
 /* Wallpaper: static layer, painted once. */
 #bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transition: opacity .5s ease; }
 #bg.swap { opacity: 0; }
- 
+
 #shade {
   position: absolute; left: 0; top: 0; width: 100%; height: 100%;
   background: linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,.45) 100%);
 }
- 
+
 /* Glass panels are plain translucent (no blur) to keep weak TV chips smooth. */
 .glass {
   background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.04)), rgba(18,24,40,.40);
@@ -37,15 +36,15 @@ html, body {
   border-top-color: rgba(255,255,255,.38);
   border-radius: 30px;
 }
- 
+
 /* Home */
 #home { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .8s ease; }
 #home.in { opacity: 1; }
- 
+
 #clockbox { position: absolute; left: 120px; top: 70px; }
 #clock { font-size: 128px; font-weight: 200; letter-spacing: -2px; line-height: 1; }
 #date { margin-top: 10px; font-size: 34px; font-weight: 400; opacity: .85; }
- 
+
 #widgets { position: absolute; right: 120px; top: 70px; width: 760px; height: 210px; }
 .widget { position: absolute; top: 0; width: 360px; height: 210px; padding: 22px 30px; overflow: hidden; }
 #w-weather { left: 0; }
@@ -55,7 +54,7 @@ html, body {
 .w-big.small { font-size: 36px; font-weight: 600; margin-top: 26px; }
 .w-sub { margin-top: 6px; font-size: 26px; }
 .dim { opacity: .65; font-size: 22px; }
- 
+
 /* Tile row */
 #rowwrap { position: absolute; left: 0; top: 340px; width: 100%; height: 300px; }
 #row {
@@ -86,7 +85,7 @@ html, body {
   box-shadow: 0 26px 44px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.3);
   z-index: 5;
 }
- 
+
 /* Recently opened row (small tiles) */
 #recent { position: absolute; left: 120px; top: 700px; width: 1680px; height: 240px; }
 .sec { font-size: 20px; letter-spacing: 3px; text-transform: uppercase; opacity: .7; }
@@ -97,7 +96,7 @@ html, body {
 .tile.sm .mono { font-size: 72px; line-height: 135px; }
 .tile.sm img.fav { width: 92px; height: 92px; padding: 12px; border-radius: 22px; }
 .tile.sm.focus { -webkit-transform: translateY(-8px) scale(1.1); transform: translateY(-8px) scale(1.1); box-shadow: 0 16px 28px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.3); }
- 
+
 /* Settings tile + tvOS-style settings app */
 .tile .gear { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; }
 #panelwrap {
@@ -111,37 +110,71 @@ html, body {
 #panelwrap.on #spage { opacity: 1; }
 #panelwrap.on.cat #spage { opacity: 0; -webkit-transform: translateX(-80px); transform: translateX(-80px); }
 #panelwrap.on.cat #sdetail { opacity: 1; -webkit-transform: translateX(0); transform: translateX(0); }
-#stitle { position: absolute; left: 0; top: 80px; width: 100%; text-align: center; font-size: 40px; font-weight: 700; }
-#slist { position: absolute; left: 50%; margin-left: -400px; top: 200px; width: 800px; }
+#stitle { position: absolute; left: 0; top: 70px; width: 100%; text-align: center; font-size: 40px; font-weight: 700; }
+#slist { position: absolute; left: 50%; margin-left: -400px; top: 170px; width: 800px; }
 .srow {
-  position: relative; height: 92px; margin-bottom: 10px; padding: 0 28px; border-radius: 24px; background: rgba(255,255,255,.08);
-  font-size: 30px; font-weight: 600; line-height: 92px; white-space: nowrap;
+  position: relative; height: 84px; margin-bottom: 10px; padding: 0 28px; border-radius: 22px; background: rgba(255,255,255,.08);
+  font-size: 28px; font-weight: 600; line-height: 84px; white-space: nowrap;
   transition: -webkit-transform .18s ease-out, transform .18s ease-out, background-color .18s ease;
   -webkit-animation: rowin .32s ease-out backwards; animation: rowin .32s ease-out backwards;
 }
 @-webkit-keyframes rowin { from { opacity: 0; -webkit-transform: translateY(16px); } to { opacity: 1; -webkit-transform: none; } }
 @keyframes rowin { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-.srow:nth-child(2) { animation-delay: .04s; -webkit-animation-delay: .04s; }
-.srow:nth-child(3) { animation-delay: .08s; -webkit-animation-delay: .08s; }
-.srow:nth-child(4) { animation-delay: .12s; -webkit-animation-delay: .12s; }
-.srow:nth-child(5) { animation-delay: .16s; -webkit-animation-delay: .16s; }
-.srow:nth-child(6) { animation-delay: .20s; -webkit-animation-delay: .20s; }
-.srow:nth-child(7) { animation-delay: .24s; -webkit-animation-delay: .24s; }
+.srow:nth-child(2) { animation-delay: .03s; -webkit-animation-delay: .03s; }
+.srow:nth-child(3) { animation-delay: .06s; -webkit-animation-delay: .06s; }
+.srow:nth-child(4) { animation-delay: .09s; -webkit-animation-delay: .09s; }
+.srow:nth-child(5) { animation-delay: .12s; -webkit-animation-delay: .12s; }
+.srow:nth-child(6) { animation-delay: .15s; -webkit-animation-delay: .15s; }
+.srow:nth-child(7) { animation-delay: .18s; -webkit-animation-delay: .18s; }
+.srow:nth-child(8) { animation-delay: .21s; -webkit-animation-delay: .21s; }
 .srow .sv { float: right; font-weight: 500; opacity: .6; }
-.srow.main { height: 104px; line-height: 104px; padding-left: 112px; }
-.srow.main .sico { position: absolute; left: 20px; top: 20px; }
-.srow.main .chev { position: absolute; right: 36px; top: 40px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
+.srow.main { height: 96px; line-height: 96px; padding-left: 108px; }
+.srow.main .sico { position: absolute; left: 18px; top: 18px; width: 60px; height: 60px; padding: 11px; }
+.srow.main .chev { position: absolute; right: 36px; top: 38px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
 .srow.focus { background: rgba(255,255,255,.94); color: #111; -webkit-transform: scale(1.03); transform: scale(1.03); }
-.srow.focus .sv { opacity: .6; }
+.srow.focus .sv { opacity: .7; }
 .sico { width: 64px; height: 64px; padding: 12px; border-radius: 16px; line-height: 0; }
 .sico svg { display: block; }
 #sleft { position: absolute; left: 140px; top: 250px; width: 640px; text-align: center; }
 #sicon { width: 200px; height: 200px; padding: 44px; border-radius: 48px; margin: 0 auto 34px; }
 #sname { font-size: 56px; font-weight: 700; }
 #sdesc { margin-top: 16px; font-size: 26px; line-height: 36px; opacity: .6; }
-#sright { position: absolute; left: 900px; top: 160px; width: 880px; }
-#phint { position: absolute; left: 0; bottom: 36px; width: 100%; text-align: center; font-size: 20px; opacity: .5; }
- 
+#sright { position: absolute; left: 900px; top: 130px; width: 880px; }
+#phint { position: absolute; left: 0; bottom: 32px; width: 100%; text-align: center; font-size: 20px; opacity: .5; }
+
+/* Android-style Toast Notification */
+#toast {
+  position: absolute; left: 50%; bottom: 110px; -webkit-transform: translateX(-50%); transform: translateX(-50%);
+  padding: 16px 34px; border-radius: 40px; background: rgba(30, 36, 48, 0.95);
+  border: 1px solid rgba(255,255,255,0.22); color: #fff; font-size: 24px; font-weight: 500;
+  white-space: nowrap; opacity: 0; pointer-events: none; z-index: 200;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6); transition: opacity .25s ease;
+}
+#toast.on { opacity: 1; }
+
+/* Developer Performance & RAM HUD Counter */
+#perfhud {
+  display: none; position: absolute; right: 24px; top: 20px; width: 350px;
+  padding: 16px 20px; border-radius: 16px; background: rgba(8, 12, 20, 0.86);
+  border: 1px solid rgba(91, 217, 140, 0.45); color: #e2e8f0;
+  font: 19px/1.45 "Courier New", Courier, monospace; z-index: 150; pointer-events: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+#perfhud .hud-title {
+  color: #5bd98c; font-weight: 700; font-size: 16px; letter-spacing: 2px;
+  text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding-bottom: 6px; margin-bottom: 8px;
+}
+#perfhud .hud-row { display: flex; justify-content: space-between; }
+#perfhud .hud-val { color: #fff; font-weight: 700; }
+#perfhud .hud-warn { color: #ffd84d; }
+#perfhud .hud-bad { color: #ff6b6b; }
+
+/* Wireframe debug mode */
+body.wireframe .tile, body.wireframe .widget, body.wireframe #clockbox, body.wireframe #recent {
+  outline: 2px dashed rgba(255, 80, 80, 0.85) !important;
+}
+
 /* Hint bar */
 #hints {
   position: absolute; left: 50%; bottom: 18px; margin-left: -330px; width: 660px; height: 52px;
@@ -150,7 +183,7 @@ html, body {
 #hints span { margin: 0 12px; }
 #hints .k { margin-right: 4px; font-size: 20px; }
 #hints .r { color: #ff6b6b; } #hints .g { color: #5bd98c; } #hints .y { color: #ffd84d; } #hints .b { color: #5aa9ff; }
- 
+
 /* Screensaver */
 #saver {
   position: absolute; left: 0; top: 0; width: 100%; height: 100%;
@@ -161,7 +194,7 @@ html, body {
   position: absolute; left: 0; top: 0; font-size: 220px; font-weight: 200; letter-spacing: -4px;
   transition: -webkit-transform 4s ease-in-out, transform 4s ease-in-out; opacity: .9;
 }
- 
+
 /* Splash */
 #splash {
   position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #000;
@@ -170,13 +203,14 @@ html, body {
 #splash canvas { position: absolute; left: 50%; top: 50%; margin: -300px 0 0 -300px; width: 600px; height: 600px; }
 #splash.out { opacity: 0; pointer-events: none; }
 #splash.gone { display: none; }
- 
+
 /* Debug overlay */
 #debug {
   display: none; position: absolute; left: 20px; top: 20px; padding: 14px 20px; border-radius: 14px;
-  background: rgba(0,0,0,.75); font: 22px/1.4 monospace; z-index: 99; white-space: pre;
+  background: rgba(0,0,0,.82); border: 1px solid rgba(255,255,255,.2);
+  font: 20px/1.4 monospace; z-index: 99; white-space: pre; pointer-events: none;
 }
- 
+
 #brand {
   position: absolute; left: 120px; top: 18px; height: 44px; line-height: 44px; white-space: nowrap;
   font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -187,9 +221,9 @@ html, body {
   position: relative; top: -2px; border-radius: 8px; background: #fff; color: #111;
   font-size: 20px; letter-spacing: 2px; text-transform: uppercase;
 }
- 
+
 #ver { position: absolute; right: 24px; bottom: 20px; font-size: 16px; letter-spacing: 1px; opacity: .4; }
- 
+
 /* Lite mode: zero animation, minimal painting. Toggle with key 1, or open the app URL with ?lite=1 */
 body.lite * { transition: none !important; animation: none !important; }
 body.lite #shade { display: none; }
@@ -204,14 +238,14 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
 <div id="stage">
   <div id="bg"></div>
   <div id="shade"></div>
- 
+
   <div id="home">
     <div id="brand"></div>
     <div id="clockbox">
       <div id="clock">--:--</div>
       <div id="date"></div>
     </div>
- 
+
     <div id="widgets">
       <div class="glass widget" id="w-weather">
         <div class="w-title">Weather</div>
@@ -225,24 +259,24 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
         <div class="w-sub dim">Change it in Settings</div>
       </div>
     </div>
- 
+
     <div id="rowwrap">
       <div id="row"></div>
     </div>
- 
+
     <div id="recent">
       <div class="sec">Recently opened</div>
       <div id="rrow"></div>
       <div id="rempty">Apps you open will show up here</div>
     </div>
- 
+
     <div id="hints" class="glass">
       <span><b>&#9664; &#9654;</b> Browse</span>
       <span><b>&#9650; &#9660;</b> Rows</span>
       <span><b>OK</b> Open</span>
     </div>
   </div>
- 
+
   <div id="panelwrap">
     <div id="spage">
       <div id="stitle">Settings</div>
@@ -254,37 +288,35 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
     </div>
     <div id="phint">&#9650; &#9660; Move &nbsp;&nbsp; OK Select &nbsp;&nbsp; Back Return</div>
   </div>
- 
+
   <div id="saver"><div id="saverclock">--:--</div></div>
- 
+
   <div id="splash"><canvas id="blob" width="300" height="300"></canvas></div>
   <div id="debug"></div>
+  <div id="perfhud"></div>
+  <div id="toast"></div>
   <div id="ver"></div>
 </div>
- 
+
 <script>
 // ===== TV Home config: edit the tiles, city and options below, push to GitHub, then reopen the app on the TV =====
 window.TVHOME_CONFIG = {
   // App name shown on the home screen and in the page title.
   name: "Kivo TV",
- 
+
   // Shown bottom-right and in the Info panel, so you can tell which file the TV is really running.
-  version: "0.7",
- 
+  version: "0.8",
+
   // Weather widget (Open-Meteo, no API key needed). Change to your city.
   weather: { name: "Hradec Králové", lat: 50.2104, lon: 15.8252 },
- 
+
   // Idle time before the clock screensaver starts.
   saverAfterSec: 120,
- 
+
   // Lite mode: no animations at all. Also toggled with key 1 on the remote, or add ?lite=1 to the app URL.
   lite: false,
- 
+
   // Tiles. Each one opens its URL in the TV browser engine.
-  // name:  label under the tile
-  // url:   where Enter goes
-  // color: two gradient colors
-  // icon:  optional image URL (otherwise the first letter is shown big)
   tiles: [
     { name: "YouTube",     url: "https://www.youtube.com/tv",              color: ["#ff5a5a", "#a30f2d"], icon: "https://cdn.simpleicons.org/youtube/white",    domain: "youtube.com" },
     { name: "Netflix",     url: "https://www.netflix.com/",                color: ["#e50914", "#6b0409"], icon: "https://cdn.simpleicons.org/netflix/white",    domain: "netflix.com" },
@@ -293,7 +325,7 @@ window.TVHOME_CONFIG = {
     { name: "Twitch",      url: "https://www.twitch.tv/",                  color: ["#9146ff", "#43199e"], icon: "https://cdn.simpleicons.org/twitch/white",     domain: "twitch.tv" },
     { name: "Spotify",     url: "https://open.spotify.com/",               color: ["#1ed760", "#0a5f2c"], icon: "https://cdn.simpleicons.org/spotify/white",    domain: "spotify.com" },
     { name: "Plex",        url: "https://app.plex.tv/desktop/",            color: ["#f0a90f", "#7a4f00"], icon: "https://cdn.simpleicons.org/plex/white",       domain: "plex.tv" },
-    { name: "iVysílání", slug: "ivysilani",   url: "https://www.ceskatelevize.cz/ivysilani/", color: ["#12a8c4", "#0b6b80"], domain: "ceskatelevize.cz" }
+    { name: "iVysílání",   slug: "ivysilani", url: "https://www.ceskatelevize.cz/ivysilani/", color: ["#12a8c4", "#0b6b80"], domain: "ceskatelevize.cz" }
   ]
 };
 </script>
@@ -302,41 +334,87 @@ window.TVHOME_CONFIG = {
    Plain ES5 on purpose: older TV browsers choke on modern syntax. */
 (function () {
   "use strict";
- 
+
+  var bootTime = Date.now();
   var errLog = [];
   window.onerror = function (msg, src, line) {
     errLog.push(String(msg).slice(0, 60) + " (line " + line + ")");
     if (errLog.length > 4) { errLog.shift(); }
     return false;
   };
- 
+
   var C = window.TVHOME_CONFIG || { tiles: [], weather: { name: "", lat: 50, lon: 15 }, saverAfterSec: 120, sounds: true };
   function $(id) { return document.getElementById(id); }
   function store(k, v) { try { if (v === undefined) { return localStorage.getItem(k); } localStorage.setItem(k, v); } catch (e) {} return null; }
   function pad(n) { return (n < 10 ? "0" : "") + n; }
- 
+
   /* Saved settings (kept in the TV browser's storage) */
-  var S = { clock24: true, tempF: false, wpKeep: false, sound: 0, saver: C.saverAfterSec || 120 };
+  var S = {
+    clock24: true,
+    clockSec: false,
+    showDate: true,
+    tempF: false,
+    wpKeep: false,
+    showWeather: true,
+    showWpWidget: true,
+    showHints: true,
+    uiScale: 1,
+    recentMax: 6,
+    sound: 0,
+    saver: C.saverAfterSec || 120,
+    saverBright: 0.9,
+    devMode: false,
+    perfHud: false,
+    wireframe: false
+  };
   try {
     var saved = JSON.parse(store("tvhome.settings") || "{}");
     for (var sk in saved) { if (saved.hasOwnProperty(sk)) { S[sk] = saved[sk]; } }
   } catch (e) {}
   function saveSettings() { store("tvhome.settings", JSON.stringify(S)); }
+
   var lastW = null;
   function fmtTime(d) {
-    var hr = d.getHours();
-    if (S.clock24) { return pad(hr) + ":" + pad(d.getMinutes()); }
-    return ((hr % 12) || 12) + ":" + pad(d.getMinutes()) + (hr < 12 ? " AM" : " PM");
+    var hr = d.getHours(), min = pad(d.getMinutes()), sec = S.clockSec ? ":" + pad(d.getSeconds()) : "";
+    if (S.clock24) { return pad(hr) + ":" + min + sec; }
+    return ((hr % 12) || 12) + ":" + min + sec + (hr < 12 ? " AM" : " PM");
   }
- 
+
+  /* Toast helper (Android-style popup message) */
+  var toastTimer = null;
+  function showToast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.className = "on";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.className = ""; }, 2400);
+  }
+
+  /* Apply visual visibility & layout settings */
+  function applyLayoutPrefs() {
+    $("date").style.display = S.showDate ? "block" : "none";
+    $("w-weather").style.display = S.showWeather ? "block" : "none";
+    $("w-wall").style.display = S.showWpWidget ? "block" : "none";
+    $("hints").style.display = S.showHints ? "block" : "none";
+    $("saverclock").style.opacity = String(S.saverBright || 0.9);
+    if (S.wireframe) {
+      if (document.body.className.indexOf("wireframe") < 0) { document.body.className += " wireframe"; }
+    } else {
+      document.body.className = document.body.className.replace(/\s*wireframe/g, "");
+    }
+    $("perfhud").style.display = S.perfHud ? "block" : "none";
+    fit();
+  }
+
   var stage = $("stage"), home = $("home"), row = $("row");
   var iconLog = {}, lastOffset = -1, lastHm = "", ready = false, saverOn = false, lastActivity = Date.now();
- 
+
   /* ---------- Fit 1920x1080 stage to the real screen ---------- */
   var stageW = 1920;
   function fit() {
-    // The stage keeps a 1080px-high design but stretches sideways, so any window shape is filled.
-    var w = window.innerWidth, hh = window.innerHeight, s = Math.min(w / 1920, hh / 1080);
+    var w = window.innerWidth, hh = window.innerHeight;
+    var baseScale = Math.min(w / 1920, hh / 1080);
+    var s = baseScale * (S.uiScale || 1);
     stageW = Math.round(w / s);
     stage.style.width = stageW + "px";
     stage.style.height = Math.round(hh / s) + "px";
@@ -346,14 +424,64 @@ window.TVHOME_CONFIG = {
   }
   window.addEventListener("resize", function () { fit(); if (ready) { lastOffset = -1; refreshFocus(); } });
   fit();
- 
+
+  /* ---------- Developer Performance & RAM Counter ---------- */
+  var fpsFrames = 0, fpsLastTime = Date.now(), currentFps = 60;
+  function fpsLoop() {
+    fpsFrames++;
+    var now = Date.now();
+    if (now - fpsLastTime >= 1000) {
+      currentFps = Math.round((fpsFrames * 1000) / (now - fpsLastTime));
+      fpsFrames = 0;
+      fpsLastTime = now;
+    }
+    if (S.perfHud) { requestAnimationFrame(fpsLoop); }
+  }
+  function startPerfHud() {
+    fpsFrames = 0;
+    fpsLastTime = Date.now();
+    requestAnimationFrame(fpsLoop);
+    updatePerfHud();
+  }
+  function updatePerfHud() {
+    if (!S.perfHud) { return; }
+    var hud = $("perfhud");
+    var memStr = "N/A (Blocked by engine)";
+    var memClass = "";
+    if (window.performance && performance.memory) {
+      var usedMB = Math.round(performance.memory.usedJSHeapSize / 1048576);
+      var limitMB = Math.round(performance.memory.jsHeapSizeLimit / 1048576);
+      memStr = usedMB + " / " + limitMB + " MB";
+      if (usedMB > limitMB * 0.8) { memClass = "hud-bad"; }
+      else if (usedMB > limitMB * 0.6) { memClass = "hud-warn"; }
+    } else if (navigator.deviceMemory) {
+      memStr = "~" + navigator.deviceMemory + " GB Sys RAM";
+    }
+    var fpsClass = currentFps < 25 ? "hud-bad" : (currentFps < 45 ? "hud-warn" : "");
+    var domCount = document.getElementsByTagName("*").length;
+    var upSec = Math.floor((Date.now() - bootTime) / 1000);
+    var upStr = Math.floor(upSec / 60) + "m " + (upSec % 60) + "s";
+    var storeKeys = 0;
+    try { storeKeys = localStorage.length; } catch (e) {}
+
+    hud.innerHTML =
+      "<div class='hud-title'>Dev Monitor &bull; v" + (C.version || "?") + "</div>" +
+      "<div class='hud-row'><span>FPS:</span><span class='hud-val " + fpsClass + "'>" + currentFps + " fps</span></div>" +
+      "<div class='hud-row'><span>JS RAM:</span><span class='hud-val " + memClass + "'>" + memStr + "</span></div>" +
+      "<div class='hud-row'><span>DOM Nodes:</span><span class='hud-val'>" + domCount + "</span></div>" +
+      "<div class='hud-row'><span>Storage:</span><span class='hud-val'>" + storeKeys + " keys</span></div>" +
+      "<div class='hud-row'><span>Stage:</span><span class='hud-val'>" + stageW + "x" + Math.round(window.innerHeight / (Math.min(window.innerWidth / 1920, window.innerHeight / 1080) * (S.uiScale || 1))) + "</span></div>" +
+      "<div class='hud-row'><span>Uptime:</span><span class='hud-val'>" + upStr + "</span></div>" +
+      "<div class='hud-row'><span>Errors:</span><span class='hud-val " + (errLog.length ? "hud-bad" : "") + "'>" + errLog.length + "</span></div>";
+  }
+
   /* ---------- Wallpapers (pure CSS gradients, no image files needed) ---------- */
   var WALLPAPERS = [
     { name: "Aurora",   css: "radial-gradient(900px 700px at 20% 30%, #1fd1a5 0%, transparent 60%), radial-gradient(1000px 800px at 80% 20%, #2b6fff 0%, transparent 60%), radial-gradient(900px 900px at 60% 90%, #0b1d4d 0%, transparent 70%), #04121f" },
     { name: "Ember",    css: "radial-gradient(900px 700px at 25% 75%, #ff8a3d 0%, transparent 60%), radial-gradient(1000px 800px at 80% 30%, #c2185b 0%, transparent 62%), radial-gradient(900px 900px at 50% 10%, #3a0a2e 0%, transparent 70%), #120309" },
     { name: "Glacier",  css: "radial-gradient(1000px 800px at 30% 20%, #9be7ff 0%, transparent 60%), radial-gradient(900px 800px at 85% 70%, #3a7bd5 0%, transparent 60%), radial-gradient(800px 800px at 10% 90%, #0f2a4a 0%, transparent 70%), #071524" },
     { name: "Meadow",   css: "radial-gradient(900px 700px at 70% 25%, #b8e986 0%, transparent 58%), radial-gradient(1000px 800px at 20% 70%, #1b8a5a 0%, transparent 62%), radial-gradient(900px 900px at 80% 95%, #0a3d2e 0%, transparent 70%), #05160f" },
-    { name: "Dusk",     css: "radial-gradient(1000px 800px at 75% 25%, #ff9a8b 0%, transparent 60%), radial-gradient(900px 800px at 20% 30%, #4a6cf7 0%, transparent 62%), radial-gradient(1000px 900px at 50% 100%, #1b1f4b 0%, transparent 70%), #0a0c1f" },
+    { name: "Dusk",     css: "radial-gradient(1000px 800px at 75% 25%, #ff9a8b 0%, transparent 60%), radial-gradient(900px 800px at 20% 30%, #4a6cf7 0%, transparent 62%), radial-gradient(900px 900px at 50% 100%, #1b1f4b 0%, transparent 70%), #0a0c1f" },
     { name: "Lagoon",   css: "radial-gradient(900px 800px at 25% 25%, #00c9ff 0%, transparent 60%), radial-gradient(1000px 800px at 80% 75%, #0072b5 0%, transparent 62%), radial-gradient(800px 800px at 60% 10%, #92fe9d 0%, transparent 65%), #03202c" },
     { name: "Graphite", css: "radial-gradient(1000px 800px at 30% 25%, #5a6270 0%, transparent 60%), radial-gradient(900px 800px at 80% 70%, #2d3440 0%, transparent 62%), radial-gradient(900px 900px at 50% 100%, #0b0d12 0%, transparent 70%), #0c0e13" },
     { name: "Sand",     css: "radial-gradient(1000px 800px at 70% 30%, #f6d7a7 0%, transparent 60%), radial-gradient(900px 800px at 20% 75%, #c98a5a 0%, transparent 62%), radial-gradient(900px 900px at 80% 95%, #5a3a2a 0%, transparent 70%), #1a110c" },
@@ -374,13 +502,13 @@ window.TVHOME_CONFIG = {
     bg.className = "swap";
     setTimeout(function () { apply(); bg.className = ""; }, 400);
   }
-  function randomWallpaper() { // different one on every launch
+  function randomWallpaper() {
     var last = parseInt(store("tvhome.wp"), 10);
     if (S.wpKeep && !isNaN(last) && last >= 0 && last < WALLPAPERS.length) { setWallpaper(last, false); return; }
     var i; do { i = Math.floor(Math.random() * WALLPAPERS.length); } while (i === last && WALLPAPERS.length > 1);
     setWallpaper(i, false);
   }
- 
+
   /* ---------- Sounds (WebAudio blips) ---------- */
   var actx = null;
   function ensureAudio(force) {
@@ -398,14 +526,12 @@ window.TVHOME_CONFIG = {
       o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + dur + 0.02);
     } catch (e) {}
   }
- 
   function navBlip() { if (S.sound === 2) { blip(520, 0.06, 0.05); } }
- 
+
   /* ---------- Rows: apps, recently opened, settings ---------- */
   var rowsEls = [[], []], rowIdx = 0, idxs = [0, 0], focusEl = null, recentTiles = [], panelOpen = false;
   var APPS = C.tiles.concat([{ name: "Settings", settings: true, color: ["#9aa3b5", "#3d4455"] }]);
-  var RECENT_MAX = 6;
- 
+
   function tag(s) { return s.indexOf("icons/") === 0 ? "local" : (s.indexOf("simpleicons") > -1 ? "logo" : "favicon"); }
   function mono(tile, name) {
     var m = document.createElement("div");
@@ -443,7 +569,7 @@ window.TVHOME_CONFIG = {
     loadIcon(d, t, srcs, 0, small);
     return d;
   }
- 
+
   function buildTiles() {
     row.innerHTML = "";
     rowsEls[0] = [];
@@ -454,7 +580,7 @@ window.TVHOME_CONFIG = {
     }
     var lb = document.createElement("div"); lb.id = "label"; row.appendChild(lb);
   }
- 
+
   /* Recently opened: names kept in localStorage, newest first */
   function readNames() {
     var names = [];
@@ -462,18 +588,18 @@ window.TVHOME_CONFIG = {
     return names;
   }
   function readRecent() {
-    var names = readNames(), out = [];
+    var names = readNames(), out = [], limit = S.recentMax || 6;
     for (var i = 0; i < names.length; i++) {
       for (var j = 0; j < C.tiles.length; j++) {
         if (C.tiles[j].name === names[i]) { out.push(C.tiles[j]); break; }
       }
     }
-    return out.slice(0, RECENT_MAX);
+    return out.slice(0, limit);
   }
   function pushRecent(name) {
     var names = readNames(), out = [name];
     for (var i = 0; i < names.length; i++) { if (names[i] !== name) { out.push(names[i]); } }
-    store("tvhome.recent", JSON.stringify(out.slice(0, RECENT_MAX)));
+    store("tvhome.recent", JSON.stringify(out.slice(0, 8)));
   }
   function buildRecent() {
     var rr = $("rrow");
@@ -489,23 +615,30 @@ window.TVHOME_CONFIG = {
     $("rempty").style.display = recentTiles.length ? "none" : "block";
     idxs[1] = Math.max(0, Math.min(idxs[1], recentTiles.length - 1));
     if (rowIdx === 1 && !recentTiles.length) { rowIdx = 0; }
-    focusEl = null; // old elements are gone
+    focusEl = null;
     refreshFocus();
   }
- 
+
   /* ---------- Settings app (tvOS style): categories, then options ---------- */
   var SCR = { page: -1, idx: 0, mainIdx: 0 };
   var settingsEls = [], settingsVals = [], settingsBase = "srow", flashUntil = 0, resetArmed = false;
+  var devTapCount = 0, devTapTimer = null;
   var SAVER_VALS = [60, 120, 300, 600, 0];
+  var SCALE_VALS = [0.9, 1, 1.1];
+  var RECENT_VALS = [4, 6, 8];
+  var BRIGHT_VALS = [0.45, 0.7, 0.95];
+
   var ICONS = {
     gear: "<svg width='100%' height='100%' viewBox='0 0 100 100'><circle cx='50' cy='50' r='37' fill='none' stroke='#fff' stroke-width='12' stroke-dasharray='9.7 9.7'/><circle cx='50' cy='50' r='26' fill='none' stroke='#fff' stroke-width='12'/></svg>",
     half: "<svg width='100%' height='100%' viewBox='0 0 100 100'><circle cx='50' cy='50' r='34' fill='none' stroke='#fff' stroke-width='8'/><path d='M50 16a34 34 0 0 1 0 68z' fill='#fff'/></svg>",
     speaker: "<svg width='100%' height='100%' viewBox='0 0 100 100'><path d='M14 38h16l22-18v60L30 62H14z' fill='#fff'/><path d='M64 36q14 14 0 28' fill='none' stroke='#fff' stroke-width='8' stroke-linecap='round'/><path d='M74 24q24 26 0 52' fill='none' stroke='#fff' stroke-width='8' stroke-linecap='round'/></svg>",
     screen: "<svg width='100%' height='100%' viewBox='0 0 100 100'><rect x='12' y='22' width='76' height='50' rx='8' fill='none' stroke='#fff' stroke-width='8'/><path d='M36 86h28' stroke='#fff' stroke-width='8' stroke-linecap='round'/></svg>",
-    info: "<svg width='100%' height='100%' viewBox='0 0 100 100'><circle cx='50' cy='50' r='36' fill='none' stroke='#fff' stroke-width='8'/><circle cx='50' cy='32' r='5' fill='#fff'/><path d='M50 46v26' stroke='#fff' stroke-width='9' stroke-linecap='round'/></svg>"
+    info: "<svg width='100%' height='100%' viewBox='0 0 100 100'><circle cx='50' cy='50' r='36' fill='none' stroke='#fff' stroke-width='8'/><circle cx='50' cy='32' r='5' fill='#fff'/><path d='M50 46v26' stroke='#fff' stroke-width='9' stroke-linecap='round'/></svg>",
+    code: "<svg width='100%' height='100%' viewBox='0 0 100 100'><polyline points='36 32 16 50 36 68' fill='none' stroke='#fff' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/><polyline points='64 32 84 50 64 68' fill='none' stroke='#fff' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/><line x1='55' y1='26' x2='45' y2='74' stroke='#fff' stroke-width='8' stroke-linecap='round'/></svg>"
   };
+
   function wpNames() { var a = []; for (var i = 0; i < WALLPAPERS.length; i++) { a.push(WALLPAPERS[i].name); } return a; }
-  function saverIdx() { for (var i = 0; i < SAVER_VALS.length; i++) { if (SAVER_VALS[i] === S.saver) { return i; } } return 1; }
+  function idxIn(arr, val, def) { for (var i = 0; i < arr.length; i++) { if (arr[i] === val) { return i; } } return def; }
   function browserName() {
     var ua = navigator.userAgent || "", m;
     m = /VIDAA[\/ ]?([\d.]+)?/i.exec(ua); if (m) { return "VIDAA" + (m[1] ? " " + m[1] : ""); }
@@ -514,42 +647,95 @@ window.TVHOME_CONFIG = {
     m = /Version\/([\d.]+).*Safari/.exec(ua); if (m) { return "Safari " + m[1]; }
     return ua.slice(0, 24) || "Unknown";
   }
- 
-  var CATS = [
-    { name: "General", color: "#8e8e93", icon: "gear", desc: "Clock, units and app controls.", items: [
+
+  function handleVersionTap() {
+    if (S.devMode) {
+      showToast("No need, you are already a developer.");
+      return;
+    }
+    devTapCount++;
+    clearTimeout(devTapTimer);
+    devTapTimer = setTimeout(function () { devTapCount = 0; }, 3000);
+
+    var left = 7 - devTapCount;
+    if (left > 0 && left <= 4) {
+      showToast("You are now " + left + " step" + (left === 1 ? "" : "s") + " away from being a developer.");
+    } else if (left <= 0) {
+      devTapCount = 0;
+      S.devMode = true;
+      saveSettings();
+      showToast("You are now a developer!");
+    }
+  }
+
+  var ALL_CATS = [
+    { name: "General", color: "#8e8e93", icon: "gear", desc: "Clock, units, recent apps and reset.", items: [
       { name: "Time format", opts: ["24-hour", "12-hour"], get: function () { return S.clock24 ? 0 : 1; }, set: function (i) { S.clock24 = (i === 0); saveSettings(); lastHm = ""; tick(); } },
+      { name: "Show seconds", opts: ["Off", "On"], get: function () { return S.clockSec ? 1 : 0; }, set: function (i) { S.clockSec = (i === 1); saveSettings(); lastHm = ""; tick(); } },
+      { name: "Show date", opts: ["On", "Off"], get: function () { return S.showDate ? 0 : 1; }, set: function (i) { S.showDate = (i === 0); saveSettings(); applyLayoutPrefs(); } },
       { name: "Temperature", opts: ["Celsius", "Fahrenheit"], get: function () { return S.tempF ? 1 : 0; }, set: function (i) { S.tempF = (i === 1); saveSettings(); if (lastW) { showWeather(lastW.t, lastW.c); } } },
+      { name: "Recent apps limit", opts: ["4 apps", "6 apps", "8 apps"], get: function () { return idxIn(RECENT_VALS, S.recentMax, 1); }, set: function (i) { S.recentMax = RECENT_VALS[i]; saveSettings(); buildRecent(); } },
+      { name: "Clear recently opened", val: function () { return Date.now() < flashUntil ? "Cleared" : "Clear"; }, run: function () { store("tvhome.recent", "[]"); buildRecent(); flashUntil = Date.now() + 2500; showToast("Recently opened cleared"); setTimeout(updateSettings, 2600); } },
       { name: "Reload app", val: "Now", run: function () { window.location.reload(); } },
-      { name: "Recently opened", val: function () { return Date.now() < flashUntil ? "Cleared" : "Clear"; }, run: function () { store("tvhome.recent", "[]"); buildRecent(); flashUntil = Date.now() + 3000; setTimeout(updateSettings, 3100); } },
       { name: "Reset all settings", val: function () { return resetArmed ? "Press OK again" : "Reset"; }, run: function () {
           if (!resetArmed) { resetArmed = true; setTimeout(function () { resetArmed = false; updateSettings(); }, 4000); return; }
           store("tvhome.settings", "{}"); store("tvhome.lite", "0"); store("tvhome.recent", "[]"); window.location.reload();
         } }
     ] },
-    { name: "Appearance", color: "#5e5ce6", icon: "half", desc: "Wallpaper and animations.", items: [
+    { name: "Appearance", color: "#5e5ce6", icon: "half", desc: "Wallpaper, widgets, scale and animations.", items: [
       { name: "Wallpaper", opts: wpNames(), get: function () { return wpIdx; }, set: function (i) { setWallpaper(i, true); } },
       { name: "Wallpaper on launch", opts: ["Random", "Keep current"], get: function () { return S.wpKeep ? 1 : 0; }, set: function (i) { S.wpKeep = (i === 1); saveSettings(); } },
-      { name: "Animations", opts: ["On", "Off"], get: function () { return document.body.className === "lite" ? 1 : 0; }, set: function (i) { setLite(i === 1); } }
+      { name: "Weather widget", opts: ["Shown", "Hidden"], get: function () { return S.showWeather ? 0 : 1; }, set: function (i) { S.showWeather = (i === 0); saveSettings(); applyLayoutPrefs(); } },
+      { name: "Wallpaper widget", opts: ["Shown", "Hidden"], get: function () { return S.showWpWidget ? 0 : 1; }, set: function (i) { S.showWpWidget = (i === 0); saveSettings(); applyLayoutPrefs(); } },
+      { name: "Bottom key hints", opts: ["Shown", "Hidden"], get: function () { return S.showHints ? 0 : 1; }, set: function (i) { S.showHints = (i === 0); saveSettings(); applyLayoutPrefs(); } },
+      { name: "UI scale", opts: ["90%", "100%", "110%"], get: function () { return idxIn(SCALE_VALS, S.uiScale, 1); }, set: function (i) { S.uiScale = SCALE_VALS[i]; saveSettings(); applyLayoutPrefs(); } },
+      { name: "Animations", opts: ["On", "Off"], get: function () { return document.body.className.indexOf("lite") >= 0 ? 1 : 0; }, set: function (i) { setLite(i === 1); } }
     ] },
     { name: "Sounds", color: "#ff375f", icon: "speaker", desc: "Optional click sounds when you move around or open apps.", items: [
       { name: "UI sounds", opts: ["Off", "Select only", "All"], get: function () { return S.sound; }, set: function (i) { S.sound = i; saveSettings(); ensureAudio(); } },
       { name: "Test sound", val: "Play", run: function () { ensureAudio(true); blip(880, 0.12, 0.07); } }
     ] },
     { name: "Screen Saver", color: "#0a84ff", icon: "screen", desc: "A moving clock appears after a while without any key presses.", items: [
-      { name: "Start after", opts: ["1 minute", "2 minutes", "5 minutes", "10 minutes", "Never"], get: saverIdx, set: function (i) { S.saver = SAVER_VALS[i]; saveSettings(); } },
+      { name: "Start after", opts: ["1 minute", "2 minutes", "5 minutes", "10 minutes", "Never"], get: function () { return idxIn(SAVER_VALS, S.saver, 1); }, set: function (i) { S.saver = SAVER_VALS[i]; saveSettings(); } },
+      { name: "Clock brightness", opts: ["Dim", "Medium", "Bright"], get: function () { return idxIn(BRIGHT_VALS, S.saverBright, 2); }, set: function (i) { S.saverBright = BRIGHT_VALS[i]; saveSettings(); applyLayoutPrefs(); } },
       { name: "Start now", val: "Start", run: function () { closePanel(); showSaver(); } }
     ] },
-    { name: "About", color: "#636366", icon: "info", desc: "Details about this app and the browser it runs in.", items: [
+    { name: "About", color: "#636366", icon: "info", desc: "Details about this app and the TV browser. Tap Version 7 times for Developer options.", items: [
       { name: "App", info: true, val: function () { return C.name || "TV Home"; } },
-      { name: "Version", info: true, val: function () { return "v" + (C.version || "?"); } },
+      { name: "Version", val: function () { return "v" + (C.version || "?"); }, run: handleVersionTap },
       { name: "Window", info: true, val: function () { return window.innerWidth + " x " + window.innerHeight; } },
       { name: "Screen", info: true, val: function () { return screen.width + " x " + screen.height; } },
       { name: "Browser", info: true, val: function () { return browserName(); } },
-      { name: "Network", info: true, val: function () { return navigator.onLine === false ? "Offline" : "Online"; } },
-      { name: "Debug box", opts: ["Hidden", "Shown"], get: function () { return debugOn ? 1 : 0; }, set: function (i) { debugOn = (i === 1); debugLog({ keyCode: "-" }); } }
+      { name: "Network", info: true, val: function () { return navigator.onLine === false ? "Offline" : "Online"; } }
+    ] },
+    { name: "Developer", devOnly: true, color: "#30d158", icon: "code", desc: "Performance HUD, RAM usage, wireframes and diagnostics.", items: [
+      { name: "Performance & RAM HUD", opts: ["Off", "On"], get: function () { return S.perfHud ? 1 : 0; }, set: function (i) {
+          S.perfHud = (i === 1);
+          saveSettings();
+          applyLayoutPrefs();
+          if (S.perfHud) { startPerfHud(); }
+        } },
+      { name: "Input & icon log box", opts: ["Hidden", "Shown"], get: function () { return debugOn ? 1 : 0; }, set: function (i) { debugOn = (i === 1); debugLog({ keyCode: "-" }); } },
+      { name: "Layout wireframes", opts: ["Off", "On"], get: function () { return S.wireframe ? 1 : 0; }, set: function (i) { S.wireframe = (i === 1); saveSettings(); applyLayoutPrefs(); } },
+      { name: "Refresh weather now", val: "Fetch", run: function () { loadWeather(); showToast("Fetching weather..."); } },
+      { name: "Simulate JS error", val: "Trigger", run: function () { errLog.push("Simulated test error @ " + fmtTime(new Date())); showToast("Test error logged"); debugLog({ keyCode: "ERR" }); } },
+      { name: "Disable Developer Mode", val: "Lock", run: function () {
+          S.devMode = false; S.perfHud = false; S.wireframe = false; debugOn = false;
+          saveSettings(); applyLayoutPrefs(); debugLog({ keyCode: "-" });
+          showToast("Developer mode disabled");
+          showMain();
+        } }
     ] }
   ];
- 
+
+  function visibleCats() {
+    var out = [];
+    for (var i = 0; i < ALL_CATS.length; i++) {
+      if (!ALL_CATS[i].devOnly || S.devMode) { out.push(ALL_CATS[i]); }
+    }
+    return out;
+  }
+
   function itemVal(it) {
     if (it.opts) { return it.opts[it.get()]; }
     var v = it.val;
@@ -561,20 +747,25 @@ window.TVHOME_CONFIG = {
   }
   function updateSettings() {
     if (!panelOpen || SCR.page < 0) { return; }
-    var items = CATS[SCR.page].items;
+    var cats = visibleCats();
+    if (!cats[SCR.page]) { return; }
+    var items = cats[SCR.page].items;
     for (var i = 0; i < settingsVals.length; i++) { settingsVals[i].textContent = itemVal(items[i]); }
   }
   function showMain() {
-    SCR.page = -1; SCR.idx = SCR.mainIdx; settingsBase = "srow main";
+    var cats = visibleCats();
+    SCR.page = -1;
+    SCR.idx = Math.min(SCR.mainIdx, cats.length - 1);
+    settingsBase = "srow main";
     var list = $("slist");
     list.innerHTML = "";
     settingsEls = []; settingsVals = [];
-    for (var i = 0; i < CATS.length; i++) {
+    for (var i = 0; i < cats.length; i++) {
       var r = mk("div", "srow main"), ic = mk("div", "sico");
-      ic.style.background = CATS[i].color;
-      ic.innerHTML = ICONS[CATS[i].icon];
+      ic.style.background = cats[i].color;
+      ic.innerHTML = ICONS[cats[i].icon];
       r.appendChild(ic);
-      r.appendChild(document.createTextNode(CATS[i].name));
+      r.appendChild(document.createTextNode(cats[i].name));
       r.appendChild(mk("span", "chev"));
       list.appendChild(r);
       settingsEls.push(r);
@@ -583,8 +774,9 @@ window.TVHOME_CONFIG = {
     setPanelClass();
   }
   function showCat(ci) {
+    var cats = visibleCats();
     SCR.mainIdx = SCR.idx; SCR.page = ci; SCR.idx = 0; resetArmed = false; settingsBase = "srow";
-    var c = CATS[ci];
+    var c = cats[ci];
     $("sicon").style.background = c.color;
     $("sicon").innerHTML = ICONS[c.icon];
     $("sname").textContent = c.name;
@@ -609,14 +801,15 @@ window.TVHOME_CONFIG = {
   function closePanel() { panelOpen = false; resetArmed = false; $("panelwrap").className = ""; }
   function stepItem(it, d) { var n = it.opts.length; it.set((it.get() + d + n) % n); updateSettings(); }
   function settingsKey(k) {
-    var n = SCR.page < 0 ? CATS.length : CATS[SCR.page].items.length;
+    var cats = visibleCats();
+    var n = SCR.page < 0 ? cats.length : cats[SCR.page].items.length;
     if (k === KEY.UP) { SCR.idx = Math.max(0, SCR.idx - 1); paintSettings(); navBlip(); }
     else if (k === KEY.DOWN) { SCR.idx = Math.min(n - 1, SCR.idx + 1); paintSettings(); navBlip(); }
     else if (SCR.page < 0) {
       if (k === KEY.ENTER) { showCat(SCR.idx); }
       else if (isBack(k)) { closePanel(); }
     } else {
-      var it = CATS[SCR.page].items[SCR.idx];
+      var it = cats[SCR.page].items[SCR.idx];
       if (k === KEY.LEFT && it.opts) { stepItem(it, -1); }
       else if (k === KEY.RIGHT && it.opts) { stepItem(it, 1); }
       else if (k === KEY.ENTER) {
@@ -626,7 +819,7 @@ window.TVHOME_CONFIG = {
       else if (isBack(k)) { showMain(); }
     }
   }
- 
+
   /* Focus handling: only the focused element's class changes */
   function refreshFocus() {
     var el = rowsEls[rowIdx][idxs[rowIdx]] || null;
@@ -669,8 +862,8 @@ window.TVHOME_CONFIG = {
     if (S.sound >= 1) { blip(880, 0.12, 0.07); }
     setTimeout(function () { window.location.href = t.url; }, 140);
   }
- 
-  /* ---------- Clock + date ---------- */
+
+  /* ---------- Clock + date + HUD tick ---------- */
   var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   function tick() {
@@ -681,9 +874,10 @@ window.TVHOME_CONFIG = {
       $("saverclock").textContent = hm;
       $("date").textContent = DAYS[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()];
     }
+    if (S.perfHud) { updatePerfHud(); }
     if (!saverOn && S.saver > 0 && ready && Date.now() - lastActivity > S.saver * 1000) { showSaver(); }
   }
- 
+
   /* ---------- Screensaver ---------- */
   var saverMove = null;
   function showSaver() {
@@ -699,7 +893,7 @@ window.TVHOME_CONFIG = {
   function hideSaver() {
     saverOn = false; $("saver").className = ""; clearInterval(saverMove);
   }
- 
+
   /* ---------- Weather (Open-Meteo) ---------- */
   function codeText(c) {
     if (c === 0) { return "Clear"; }
@@ -744,11 +938,11 @@ window.TVHOME_CONFIG = {
     $("w-desc").textContent = "Offline";
     $("w-place").textContent = C.weather.name;
   }
- 
+
   /* ---------- Startup splash: glowing blob, then zoom out into Home ---------- */
   function runSplash(done) {
     var cv = $("blob"), g = cv.getContext("2d"), t0 = Date.now(), D = 2000, finished = false;
-    g.scale(0.5, 0.5); // canvas is half resolution
+    g.scale(0.5, 0.5);
     var COLS = ["rgba(70,190,255,", "rgba(60,255,200,", "rgba(120,140,255,"];
     function frame() {
       var t = Date.now() - t0, p = Math.min(1, t / D);
@@ -770,7 +964,7 @@ window.TVHOME_CONFIG = {
       else if (!finished) { finished = true; done(); }
     }
     requestAnimationFrame(frame);
-    setTimeout(function () { if (!finished) { finished = true; done(); } }, D + 800); // safety net
+    setTimeout(function () { if (!finished) { finished = true; done(); } }, D + 800);
   }
   function startHome() {
     var s = $("splash");
@@ -780,12 +974,16 @@ window.TVHOME_CONFIG = {
     lastActivity = Date.now();
     setTimeout(function () { s.className = "gone"; }, 1000);
   }
- 
+
   /* ---------- Keys ---------- */
   var KEY = { LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, ENTER: 13, RED: 403, GREEN: 404, YELLOW: 405, BLUE: 406 };
   function isBack(k) { return k === 8 || k === 27 || k === 461 || k === 10009 || k === 10182; }
   function setLite(on) {
-    document.body.className = on ? "lite" : "";
+    if (on) {
+      if (document.body.className.indexOf("lite") < 0) { document.body.className += " lite"; }
+    } else {
+      document.body.className = document.body.className.replace(/\s*lite/g, "");
+    }
     store("tvhome.lite", on ? "1" : "0");
     updateSettings();
   }
@@ -798,15 +996,27 @@ window.TVHOME_CONFIG = {
   function debugLog(e) {
     var d = $("debug");
     d.style.display = debugOn ? "block" : "none";
-    if (debugOn) { d.textContent = "Kivo TV v" + (C.version || "?") + "\nkeyCode: " + e.keyCode + "\nkey: " + (e.key || "-") + "\nscreen: " + window.innerWidth + "x" + window.innerHeight + "\nerrors: " + (errLog.length ? "\n  " + errLog.join("\n  ") : "none") + iconReport(); }
+    if (debugOn) {
+      d.textContent = "Kivo TV v" + (C.version || "?") +
+        "\nkeyCode: " + e.keyCode +
+        "\nkey: " + (e.key || "-") +
+        "\nscreen: " + window.innerWidth + "x" + window.innerHeight +
+        "\nerrors: " + (errLog.length ? "\n  " + errLog.join("\n  ") : "none") + iconReport();
+    }
   }
   document.addEventListener("keydown", function (e) {
     var k = e.keyCode;
     ensureAudio();
     lastActivity = Date.now();
-    if (k === KEY.BLUE || k === 68) { debugOn = !debugOn; updateSettings(); }
-    if (k === 49) { setLite(document.body.className !== "lite"); }
-    if (debugOn || k === KEY.BLUE || k === 68) { debugLog(e); }
+    if (k === KEY.BLUE || k === 68) {
+      S.perfHud = !S.perfHud;
+      saveSettings();
+      applyLayoutPrefs();
+      if (S.perfHud) { startPerfHud(); }
+      updateSettings();
+    }
+    if (k === 49) { setLite(document.body.className.indexOf("lite") < 0); }
+    if (debugOn) { debugLog(e); }
     if (saverOn) { hideSaver(); e.preventDefault(); return; }
     if (!ready) { return; }
     if (panelOpen) { settingsKey(k); e.preventDefault(); return; }
@@ -820,9 +1030,11 @@ window.TVHOME_CONFIG = {
     else if (k === KEY.YELLOW || k === 82) { window.location.reload(); }
     else if (isBack(k)) { /* leave Back alone at Home so the TV can close the app */ }
   });
- 
+
   /* ---------- Boot ---------- */
-  if (C.lite || store("tvhome.lite") === "1" || /[?&]lite=1/.test(window.location.search)) { document.body.className = "lite"; }
+  if (C.lite || store("tvhome.lite") === "1" || /[?&]lite=1/.test(window.location.search)) { setLite(true); }
+  applyLayoutPrefs();
+  if (S.perfHud) { startPerfHud(); }
   document.title = C.name || "TV Home";
   $("ver").textContent = "v" + (C.version || "?");
   (function () {
@@ -843,4 +1055,3 @@ window.TVHOME_CONFIG = {
 </script>
 </body>
 </html>
- 
