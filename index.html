@@ -22,7 +22,7 @@ html, body {
 }
  
 /* Wallpaper: static layer, painted once. */
-#bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transition: opacity .5s ease; }
+#bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transition: opacity .5s ease; }
 #bg.swap { opacity: 0; }
  
 #shade {
@@ -66,7 +66,7 @@ html, body {
   position: relative; display: inline-block; vertical-align: top;
   width: 380px; height: 214px; margin-right: 30px; border-radius: 28px; overflow: hidden;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.16);
-  transition: -webkit-transform .2s ease-out, transform .2s ease-out;
+  transition: -webkit-transform .28s cubic-bezier(.2,.9,.3,1.15), transform .28s cubic-bezier(.2,.9,.3,1.15);
   will-change: transform;
 }
 .tile .mono {
@@ -100,18 +100,38 @@ html, body {
  
 /* Settings tile + tvOS-style settings app */
 .tile .gear { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; }
-#panelwrap { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #0c1019 0%, #05070b 100%); }
-#panelwrap.on { display: block; }
-#spage, #sdetail { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
-#sdetail { display: none; }
+#panelwrap {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #0c1019 0%, #05070b 100%);
+  opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s linear .25s;
+}
+#panelwrap.on { opacity: 1; visibility: visible; transition: opacity .25s ease; }
+#spage, #sdetail { position: absolute; top: 0; height: 100%; opacity: 0; transition: opacity .28s ease, -webkit-transform .28s ease, transform .28s ease; }
+#spage { left: 0; width: 100%; }
+#sdetail { left: 50%; margin-left: -960px; width: 1920px; -webkit-transform: translateX(80px); transform: translateX(80px); }
+#panelwrap.on #spage { opacity: 1; }
+#panelwrap.on.cat #spage { opacity: 0; -webkit-transform: translateX(-80px); transform: translateX(-80px); }
+#panelwrap.on.cat #sdetail { opacity: 1; -webkit-transform: translateX(0); transform: translateX(0); }
 #stitle { position: absolute; left: 0; top: 80px; width: 100%; text-align: center; font-size: 40px; font-weight: 700; }
-#slist { position: absolute; left: 560px; top: 200px; width: 800px; }
-.srow { position: relative; height: 92px; margin-bottom: 10px; padding: 0 28px; border-radius: 24px; background: rgba(255,255,255,.08); font-size: 30px; font-weight: 600; line-height: 92px; white-space: nowrap; }
+#slist { position: absolute; left: 50%; margin-left: -400px; top: 200px; width: 800px; }
+.srow {
+  position: relative; height: 92px; margin-bottom: 10px; padding: 0 28px; border-radius: 24px; background: rgba(255,255,255,.08);
+  font-size: 30px; font-weight: 600; line-height: 92px; white-space: nowrap;
+  transition: -webkit-transform .18s ease-out, transform .18s ease-out, background-color .18s ease;
+  -webkit-animation: rowin .32s ease-out backwards; animation: rowin .32s ease-out backwards;
+}
+@-webkit-keyframes rowin { from { opacity: 0; -webkit-transform: translateY(16px); } to { opacity: 1; -webkit-transform: none; } }
+@keyframes rowin { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.srow:nth-child(2) { animation-delay: .04s; -webkit-animation-delay: .04s; }
+.srow:nth-child(3) { animation-delay: .08s; -webkit-animation-delay: .08s; }
+.srow:nth-child(4) { animation-delay: .12s; -webkit-animation-delay: .12s; }
+.srow:nth-child(5) { animation-delay: .16s; -webkit-animation-delay: .16s; }
+.srow:nth-child(6) { animation-delay: .20s; -webkit-animation-delay: .20s; }
+.srow:nth-child(7) { animation-delay: .24s; -webkit-animation-delay: .24s; }
 .srow .sv { float: right; font-weight: 500; opacity: .6; }
 .srow.main { height: 104px; line-height: 104px; padding-left: 112px; }
 .srow.main .sico { position: absolute; left: 20px; top: 20px; }
 .srow.main .chev { position: absolute; right: 36px; top: 40px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
-.srow.focus { background: rgba(255,255,255,.94); color: #111; }
+.srow.focus { background: rgba(255,255,255,.94); color: #111; -webkit-transform: scale(1.03); transform: scale(1.03); }
 .srow.focus .sv { opacity: .6; }
 .sico { width: 64px; height: 64px; padding: 12px; border-radius: 16px; line-height: 0; }
 .sico svg { display: block; }
@@ -147,7 +167,7 @@ html, body {
   position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #000;
   transition: opacity .6s ease;
 }
-#splash canvas { position: absolute; left: 660px; top: 240px; width: 600px; height: 600px; }
+#splash canvas { position: absolute; left: 50%; top: 50%; margin: -300px 0 0 -300px; width: 600px; height: 600px; }
 #splash.out { opacity: 0; pointer-events: none; }
 #splash.gone { display: none; }
  
@@ -249,7 +269,7 @@ window.TVHOME_CONFIG = {
   name: "Kivo TV",
  
   // Shown bottom-right and in the Info panel, so you can tell which file the TV is really running.
-  version: "0.6",
+  version: "0.7",
  
   // Weather widget (Open-Meteo, no API key needed). Change to your city.
   weather: { name: "Hradec Králové", lat: 50.2104, lon: 15.8252 },
@@ -313,13 +333,18 @@ window.TVHOME_CONFIG = {
   var iconLog = {}, lastOffset = -1, lastHm = "", ready = false, saverOn = false, lastActivity = Date.now();
  
   /* ---------- Fit 1920x1080 stage to the real screen ---------- */
+  var stageW = 1920;
   function fit() {
-    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    // The stage keeps a 1080px-high design but stretches sideways, so any window shape is filled.
+    var w = window.innerWidth, hh = window.innerHeight, s = Math.min(w / 1920, hh / 1080);
+    stageW = Math.round(w / s);
+    stage.style.width = stageW + "px";
+    stage.style.height = Math.round(hh / s) + "px";
     stage.style.webkitTransform = stage.style.transform = (s === 1 ? "none" : "scale(" + s + ")");
-    stage.style.left = ((window.innerWidth - 1920 * s) / 2) + "px";
-    stage.style.top = ((window.innerHeight - 1080 * s) / 2) + "px";
+    stage.style.left = "0px";
+    stage.style.top = "0px";
   }
-  window.addEventListener("resize", fit);
+  window.addEventListener("resize", function () { fit(); if (ready) { lastOffset = -1; refreshFocus(); } });
   fit();
  
   /* ---------- Wallpapers (pure CSS gradients, no image files needed) ---------- */
@@ -517,7 +542,8 @@ window.TVHOME_CONFIG = {
     { name: "About", color: "#636366", icon: "info", desc: "Details about this app and the browser it runs in.", items: [
       { name: "App", info: true, val: function () { return C.name || "TV Home"; } },
       { name: "Version", info: true, val: function () { return "v" + (C.version || "?"); } },
-      { name: "Display", info: true, val: function () { return window.innerWidth + " x " + window.innerHeight; } },
+      { name: "Window", info: true, val: function () { return window.innerWidth + " x " + window.innerHeight; } },
+      { name: "Screen", info: true, val: function () { return screen.width + " x " + screen.height; } },
       { name: "Browser", info: true, val: function () { return browserName(); } },
       { name: "Network", info: true, val: function () { return navigator.onLine === false ? "Offline" : "Online"; } },
       { name: "Debug box", opts: ["Hidden", "Shown"], get: function () { return debugOn ? 1 : 0; }, set: function (i) { debugOn = (i === 1); debugLog({ keyCode: "-" }); } }
@@ -540,8 +566,6 @@ window.TVHOME_CONFIG = {
   }
   function showMain() {
     SCR.page = -1; SCR.idx = SCR.mainIdx; settingsBase = "srow main";
-    $("sdetail").style.display = "none";
-    $("spage").style.display = "block";
     var list = $("slist");
     list.innerHTML = "";
     settingsEls = []; settingsVals = [];
@@ -556,12 +580,11 @@ window.TVHOME_CONFIG = {
       settingsEls.push(r);
     }
     paintSettings();
+    setPanelClass();
   }
   function showCat(ci) {
     SCR.mainIdx = SCR.idx; SCR.page = ci; SCR.idx = 0; resetArmed = false; settingsBase = "srow";
     var c = CATS[ci];
-    $("spage").style.display = "none";
-    $("sdetail").style.display = "block";
     $("sicon").style.background = c.color;
     $("sicon").innerHTML = ICONS[c.icon];
     $("sname").textContent = c.name;
@@ -579,8 +602,10 @@ window.TVHOME_CONFIG = {
     }
     updateSettings();
     paintSettings();
+    setPanelClass();
   }
-  function openPanel() { panelOpen = true; SCR.mainIdx = 0; showMain(); $("panelwrap").className = "on"; }
+  function setPanelClass() { $("panelwrap").className = panelOpen ? (SCR.page >= 0 ? "on cat" : "on") : ""; }
+  function openPanel() { panelOpen = true; SCR.mainIdx = 0; showMain(); }
   function closePanel() { panelOpen = false; resetArmed = false; $("panelwrap").className = ""; }
   function stepItem(it, d) { var n = it.opts.length; it.set((it.get() + d + n) % n); updateSettings(); }
   function settingsKey(k) {
@@ -617,7 +642,7 @@ window.TVHOME_CONFIG = {
       if (rowIdx === 1 && recentTiles[idxs[1]]) { r.textContent = recentTiles[idxs[1]].name; r.style.left = (idxs[1] * 260 + 120) + "px"; }
       else { r.textContent = ""; }
     }
-    var offset = Math.max(0, (idxs[0] + 1) * 410 + 120 - 1700);
+    var offset = Math.max(0, (idxs[0] + 1) * 410 + 120 - (stageW - 220));
     if (offset !== lastOffset) {
       lastOffset = offset;
       row.style.webkitTransform = row.style.transform = "translateX(" + (-offset) + "px)";
