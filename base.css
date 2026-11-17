@@ -1,0 +1,37 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%; overflow: hidden; background: #000; color: #fff;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* The whole UI is drawn on a fixed 1920x1080 stage and scaled to the screen. */
+#stage {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  transform-origin: 0 0; overflow: hidden; background: #000;
+}
+
+/* Wallpaper: static layer, painted once. */
+#bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transition: opacity .5s ease; }
+#bg.swap { opacity: 0; }
+
+#shade {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,.45) 100%);
+}
+
+/* Glass panels are plain translucent (no blur) to keep weak TV chips smooth. */
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.04)), rgba(18,24,40,.40);
+  border: 1px solid rgba(255,255,255,.18);
+  border-top-color: rgba(255,255,255,.38);
+  border-radius: 30px;
+}
+
+/* Lite mode: zero animation, minimal painting. Toggle with key 1, or open the app URL with ?lite=1 */
+body.lite * { transition: none !important; animation: none !important; }
+body.lite #shade { display: none; }
+body.lite .tile { border-radius: 0; will-change: auto; }
+body.lite .tile.focus { -webkit-transform: none; transform: none; }
+body.lite .glass { border-radius: 0; }
+body.lite .tile::before, body.lite .tile::after { display: none; }
+body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
