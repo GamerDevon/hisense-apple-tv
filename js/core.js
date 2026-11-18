@@ -24,7 +24,7 @@
     showWeather: true, showWall: true, showRecent: true, showHints: true,
     city: (C.weather && C.weather.name) || "",
     hidden: {},                          /* app name -> true when hidden from Home */
-    blur: true,                          /* frosted glass look; if the TV lags, switch it off (stays off) */
+    blur: false,                          /* frosted glass look; if the TV lags, switch it off (stays off) */
     dateFmt: 0, focusStrong: false, bigClock: false,
     dev: false, perfHud: false
   };
