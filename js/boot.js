@@ -3,7 +3,7 @@
   "use strict";
   var TV = window.TV, $ = TV.$, C = TV.C, S = TV.S, store = TV.store;
 
-  if (C.lite || store("tvhome.lite") === "1" || /[?&]lite=1/.test(window.location.search)) { document.body.className = "lite"; }
+  if (C.lite || store("tvhome.lite") === "1" || /[?&]lite=1/.test(window.location.search)) { TV.setClass("lite", true); }
   document.title = C.name || "TV Home";
   $("ver").textContent = "v" + (C.version || "?");
   (function () {
@@ -12,6 +12,8 @@
     if (tv) { var s = document.createElement("span"); s.className = "tv"; s.textContent = tv; b.appendChild(s); }
   })();
 
+  TV.initBlur();
+  TV.applyAccess();
   TV.randomWallpaper();
   TV.setupWpTimer();
   TV.buildTiles();

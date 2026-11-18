@@ -1,0 +1,9 @@
+/* Blur (frosted glass). Only active with body.blur AND a browser that supports backdrop-filter.
+   Browsers without support keep the normal solid look. Lite mode always turns blur off. */
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  body.blur .glass, body.blur #toast { -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
+  body.blur #panelwrap { background: rgba(8,12,20,.5); -webkit-backdrop-filter: blur(36px); backdrop-filter: blur(36px); }
+  body.blur .srow { background: rgba(255,255,255,.12); }
+  body.blur .srow.focus { background: rgba(255,255,255,.94); }
+}
+body.lite * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }

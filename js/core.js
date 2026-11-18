@@ -24,6 +24,8 @@
     showWeather: true, showWall: true, showRecent: true, showHints: true,
     city: (C.weather && C.weather.name) || "",
     hidden: {},                          /* app name -> true when hidden from Home */
+    blur: true,                          /* frosted glass look; if the TV lags, switch it off (stays off) */
+    dateFmt: 0, focusStrong: false, bigClock: false,
     dev: false, perfHud: false
   };
   try {
@@ -39,5 +41,12 @@
     lastW: null, lastOffset: -1, lastHm: "",
     ready: false, saverOn: false, panelOpen: false, debugOn: false,
     lastActivity: Date.now(), stageW: 1920
+  };
+
+  /* Body classes (lite, blur, fring, bigclock) without wiping each other */
+  TV.hasClass = function (c) { return (" " + document.body.className + " ").indexOf(" " + c + " ") > -1; };
+  TV.setClass = function (c, on) {
+    var cur = (" " + document.body.className + " ").split(" " + c + " ").join(" ").replace(/\s+/g, " ").replace(/^ | $/g, "");
+    document.body.className = on ? (cur ? cur + " " + c : c) : cur;
   };
 })();

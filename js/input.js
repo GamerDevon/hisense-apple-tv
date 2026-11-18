@@ -7,7 +7,7 @@
   function isBack(k) { return k === 8 || k === 27 || k === 461 || k === 10009 || k === 10182; }
 
   function setLite(on) {
-    document.body.className = on ? "lite" : "";
+    TV.setClass("lite", on);
     store("tvhome.lite", on ? "1" : "0");
     TV.updateSettings();
   }
@@ -22,7 +22,8 @@
     TV.lastActivity = Date.now();
     /* Blue / D toggles the debug box, but only once Developer options are unlocked */
     if (S.dev && (k === KEY.BLUE || k === 68)) { TV.debugOn = !TV.debugOn; TV.updateSettings(); }
-    if (k === 49) { setLite(document.body.className !== "lite"); }
+    if (k === 49) { setLite(!TV.hasClass("lite")); }
+    if (k === 50) { TV.setBlur(!S.blur, true); }   /* 2 = blur on/off, works even if the menu lags */
     if (TV.debugOn || (S.dev && (k === KEY.BLUE || k === 68))) { TV.debugLog(e); }
     if (TV.saverOn) { TV.hideSaver(); e.preventDefault(); return; }
     if (!TV.ready) { return; }

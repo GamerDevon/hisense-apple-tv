@@ -11,10 +11,17 @@
     return ((hr % 12) || 12) + ":" + pad(d.getMinutes()) + (hr < 12 ? " AM" : " PM");
   }
 
+  /* S.dateFmt: 0 "Wednesday, 18 November", 1 "18.11.2026", 2 "Wed 18 Nov" */
+  function dateText(d) {
+    if (S.dateFmt === 1) { return d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear(); }
+    if (S.dateFmt === 2) { return DAYS[d.getDay()].slice(0, 3) + " " + d.getDate() + " " + MONTHS[d.getMonth()].slice(0, 3); }
+    return DAYS[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()];
+  }
+
   function tick() {
     var d = new Date(), hm = fmtTime(d);
     if (hm !== TV.lastHm) {
-      var ds = DAYS[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()];
+      var ds = dateText(d);
       TV.lastHm = hm;
       $("clock").textContent = hm;
       $("saverclock").textContent = hm;

@@ -34,9 +34,10 @@
 .srow .sv { float: right; font-weight: 500; opacity: .6; }
 .srow.main { height: 84px; line-height: 84px; margin-bottom: 8px; padding-left: 104px; }
 .srow.main .sico { position: absolute; left: 18px; top: 10px; }
-.srow.main .chev { position: absolute; right: 36px; top: 30px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
+.srow.main .chev { position: absolute; right: 36px; top: 30px; margin-top: 0; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
 .srow.focus { background: rgba(255,255,255,.94); color: #111; -webkit-transform: scale(1.03); transform: scale(1.03); }
 .srow.focus .sv { opacity: .6; }
+.srow .chev { position: absolute; right: 30px; top: 50%; margin-top: -9px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
 
 .sico { width: 64px; height: 64px; padding: 12px; border-radius: 16px; line-height: 0; }
 .sico svg { display: block; }

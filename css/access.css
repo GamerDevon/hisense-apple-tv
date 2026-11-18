@@ -1,0 +1,5 @@
+/* Accessibility */
+body.fring .tile.focus { box-shadow: 0 0 0 7px #fff, 0 20px 32px rgba(0,0,0,.45); }
+body.fring .tile.sm.focus { box-shadow: 0 0 0 5px #fff, 0 12px 22px rgba(0,0,0,.45); }
+body.bigclock #clock { font-size: 164px; }
+body.bigclock #date { font-size: 42px; }
