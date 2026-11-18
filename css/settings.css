@@ -10,8 +10,8 @@
 #panelwrap.on #spage { opacity: 1; }
 #panelwrap.on.cat #spage { opacity: 0; -webkit-transform: translateX(-80px); transform: translateX(-80px); }
 #panelwrap.on.cat #sdetail { opacity: 1; -webkit-transform: translateX(0); transform: translateX(0); }
-#stitle { position: absolute; left: 0; top: 80px; width: 100%; text-align: center; font-size: 40px; font-weight: 700; }
-#slist { position: absolute; left: 50%; margin-left: -400px; top: 200px; width: 800px; }
+#stitle { position: absolute; left: 0; top: 58px; width: 100%; text-align: center; font-size: 40px; font-weight: 700; }
+#slist { position: absolute; left: 50%; margin-left: -400px; top: 160px; width: 800px; }
 
 .srow {
   position: relative; height: 92px; margin-bottom: 10px; padding: 0 28px; border-radius: 24px; background: rgba(255,255,255,.08);
@@ -27,11 +27,14 @@
 .srow:nth-child(5) { animation-delay: .16s; -webkit-animation-delay: .16s; }
 .srow:nth-child(6) { animation-delay: .20s; -webkit-animation-delay: .20s; }
 .srow:nth-child(7) { animation-delay: .24s; -webkit-animation-delay: .24s; }
+.srow:nth-child(8) { animation-delay: .28s; -webkit-animation-delay: .28s; }
+.srow:nth-child(9) { animation-delay: .32s; -webkit-animation-delay: .32s; }
+.srow:nth-child(10) { animation-delay: .36s; -webkit-animation-delay: .36s; }
 
 .srow .sv { float: right; font-weight: 500; opacity: .6; }
-.srow.main { height: 104px; line-height: 104px; padding-left: 112px; }
-.srow.main .sico { position: absolute; left: 20px; top: 20px; }
-.srow.main .chev { position: absolute; right: 36px; top: 40px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
+.srow.main { height: 84px; line-height: 84px; margin-bottom: 8px; padding-left: 104px; }
+.srow.main .sico { position: absolute; left: 18px; top: 10px; }
+.srow.main .chev { position: absolute; right: 36px; top: 30px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
 .srow.focus { background: rgba(255,255,255,.94); color: #111; -webkit-transform: scale(1.03); transform: scale(1.03); }
 .srow.focus .sv { opacity: .6; }
 
@@ -42,4 +45,5 @@
 #sname { font-size: 56px; font-weight: 700; }
 #sdesc { margin-top: 16px; font-size: 26px; line-height: 36px; opacity: .6; }
 #sright { position: absolute; left: 900px; top: 160px; width: 880px; }
+#sright.tight .srow { height: 76px; line-height: 76px; margin-bottom: 8px; }
 #phint { position: absolute; left: 0; bottom: 36px; width: 100%; text-align: center; font-size: 20px; opacity: .5; }

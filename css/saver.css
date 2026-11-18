@@ -1,0 +1,17 @@
+/* Screensaver. Styles: .st0 drifting clock, .st1 centered clock, .st2 dim clock */
+#saver {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,.62); opacity: 0; pointer-events: none; transition: opacity 1.5s ease;
+}
+#saver.on { opacity: 1; }
+#saverbox {
+  position: absolute; left: 0; top: 0; width: 760px; text-align: center;
+  transition: -webkit-transform 4s ease-in-out, transform 4s ease-in-out; opacity: .9;
+}
+#saverclock { font-size: 220px; font-weight: 200; letter-spacing: -4px; line-height: 1.1; }
+#saverdate { font-size: 40px; font-weight: 400; opacity: .7; }
+
+#saver.on.st1 #saverbox { left: 50%; margin-left: -380px; top: 50%; margin-top: -170px; }
+#saver.st2 { background: rgba(0,0,0,.93); }
+#saver.st2 #saverclock { font-size: 120px; }
+#saver.st2 #saverdate { font-size: 28px; }

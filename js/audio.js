@@ -11,6 +11,7 @@
 
   function blip(freq, dur, vol) {
     if (!actx) { return; }
+    vol = Math.max(0.0002, vol * S.vol / 60); /* S.vol 0..100, 60 = original loudness */
     try {
       var o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime;
       o.type = "sine"; o.frequency.value = freq;

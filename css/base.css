@@ -19,6 +19,9 @@ html, body {
   background: linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,.45) 100%);
 }
 
+/* Brightness: black layer on top of everything, opacity set from S.dim */
+#dimmer { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #000; opacity: 0; pointer-events: none; z-index: 50; }
+
 /* Glass panels are plain translucent (no blur) to keep weak TV chips smooth. */
 .glass {
   background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.04)), rgba(18,24,40,.40);

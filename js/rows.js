@@ -5,7 +5,7 @@
 
   var row = $("row");
   var rowsEls = [[], []], rowIdx = 0, idxs = [0, 0], focusEl = null, recentTiles = [];
-  var APPS = C.tiles.concat([{ name: "Settings", settings: true, color: ["#9aa3b5", "#3d4455"] }]);
+  var APPS = TV.computeApps();
   var RECENT_MAX = 6;
 
   function tag(s) { return s.indexOf("icons/") === 0 ? "local" : (s.indexOf("simpleicons") > -1 ? "logo" : "favicon"); }
@@ -56,6 +56,14 @@
     }
     var lb = document.createElement("div"); lb.id = "label"; row.appendChild(lb);
   }
+  /* Hidden apps changed: recompute the list, rebuild the row and keep focus in range */
+  function rebuildApps() {
+    APPS = TV.computeApps();
+    idxs[0] = Math.max(0, Math.min(idxs[0], APPS.length - 1));
+    focusEl = null; TV.lastOffset = -1;
+    buildTiles();
+    buildRecent();
+  }
 
   /* Recently opened: names kept in localStorage, newest first */
   function readNames() {
@@ -67,7 +75,7 @@
     var names = readNames(), out = [];
     for (var i = 0; i < names.length; i++) {
       for (var j = 0; j < C.tiles.length; j++) {
-        if (C.tiles[j].name === names[i]) { out.push(C.tiles[j]); break; }
+        if (C.tiles[j].name === names[i] && !TV.isHidden(names[i])) { out.push(C.tiles[j]); break; }
       }
     }
     return out.slice(0, RECENT_MAX);
@@ -90,7 +98,7 @@
     var lb = document.createElement("div"); lb.id = "rlabel"; rr.appendChild(lb);
     $("rempty").style.display = recentTiles.length ? "none" : "block";
     idxs[1] = Math.max(0, Math.min(idxs[1], recentTiles.length - 1));
-    if (rowIdx === 1 && !recentTiles.length) { rowIdx = 0; }
+    if (rowIdx === 1 && rowCount(1) === 0) { rowIdx = 0; }
     focusEl = null; // old elements are gone
     refreshFocus();
   }
@@ -116,7 +124,7 @@
       row.style.webkitTransform = row.style.transform = "translateX(" + (-offset) + "px)";
     }
   }
-  function rowCount(r) { return r === 0 ? APPS.length : recentTiles.length; }
+  function rowCount(r) { return r === 0 ? APPS.length : (S.showRecent ? recentTiles.length : 0); }
   function moveCol(d) {
     var i = Math.max(0, Math.min(rowCount(rowIdx) - 1, idxs[rowIdx] + d));
     if (i !== idxs[rowIdx]) { idxs[rowIdx] = i; refreshFocus(); TV.navBlip(); }
@@ -139,6 +147,7 @@
   }
 
   TV.buildTiles = buildTiles;
+  TV.rebuildApps = rebuildApps;
   TV.buildRecent = buildRecent;
   TV.refreshFocus = refreshFocus;
   TV.moveCol = moveCol;
