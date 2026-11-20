@@ -23,8 +23,8 @@
 
   /* 1 = effect on. Fast switches off everything that is expensive to paint. */
   var PRESET = [
-    { shade: 0, overlays: 0, shadow: 0, round: 1, panelfade: 0, bg: 1, lift: 1, rowslide: 1, layers: 1, hidehome: 1, zoom: 0 },
-    { shade: 0, overlays: 1, shadow: 0, round: 1, panelfade: 1, bg: 1, lift: 1, rowslide: 1, layers: 1, hidehome: 1, zoom: 0 },
+    { shade: 0, overlays: 0, shadow: 0, round: 1, panelfade: 0, bg: 1, lift: 1, rowslide: 1, layers: 0, hidehome: 1, zoom: 0 },
+    { shade: 0, overlays: 1, shadow: 0, round: 1, panelfade: 1, bg: 1, lift: 1, rowslide: 1, layers: 0, hidehome: 1, zoom: 0 },
     { shade: 1, overlays: 1, shadow: 1, round: 1, panelfade: 1, bg: 1, lift: 1, rowslide: 1, layers: 1, hidehome: 1, zoom: 0 }
   ];
 
@@ -40,7 +40,11 @@
   }
 
   /* Settings animation: 0 Off, 1 Light (sliding highlight), 2 Full (original per-row animations). Default is Full (the original look). */
-  function rowAnimLevel() { return (S.rowAnim === 0 || S.rowAnim === 1 || S.rowAnim === 2) ? S.rowAnim : 2; }
+  function rowAnimLevel() {
+    if (S.rowAnim === 0 || S.rowAnim === 1 || S.rowAnim === 2) { return S.rowAnim; }
+    /* Keep the default animation cost aligned with the selected performance preset. */
+    return S.perf === 0 ? 1 : 2;
+  }
 
   function applyPerf() {
     var zoom = on("zoom");
