@@ -39,8 +39,8 @@
     $("home").style.visibility = (open && on("hidehome") && !TV.hasClass("blur")) ? "hidden" : "";
   }
 
-  /* Settings animation: 0 Off, 1 Light (sliding highlight), 2 Full (original per-row animations). Auto: Pretty = Full, otherwise Light. */
-  function rowAnimLevel() { return (S.rowAnim === 0 || S.rowAnim === 1 || S.rowAnim === 2) ? S.rowAnim : (S.perf === 2 ? 2 : 1); }
+  /* Settings animation: 0 Off, 1 Light (sliding highlight), 2 Full (original per-row animations). Default is Full (the original look). */
+  function rowAnimLevel() { return (S.rowAnim === 0 || S.rowAnim === 1 || S.rowAnim === 2) ? S.rowAnim : 2; }
 
   function applyPerf() {
     var zoom = on("zoom");
