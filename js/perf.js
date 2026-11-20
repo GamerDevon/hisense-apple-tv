@@ -40,7 +40,11 @@
   }
 
   /* Settings animation: 0 Off, 1 Light (sliding highlight), 2 Full (original per-row animations). Default is Full (the original look). */
-  function rowAnimLevel() { return (S.rowAnim === 0 || S.rowAnim === 1 || S.rowAnim === 2) ? S.rowAnim : 2; }
+  function rowAnimLevel() {
+    if (S.rowAnim === 0 || S.rowAnim === 1 || S.rowAnim === 2) { return S.rowAnim; }
+    /* Keep the default animation cost aligned with the selected performance preset. */
+    return S.perf === 0 ? 1 : 2;
+  }
 
   function applyPerf() {
     var zoom = on("zoom");
