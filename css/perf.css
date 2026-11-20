@@ -2,8 +2,8 @@
    body.x-<effect> means that effect is switched off. */
 
 /* Cheaper tile focus for Fast and Balanced: a small scale instead of lift + big scale, shorter animations */
-body.pf0 .tile.focus, body.pf1 .tile.focus { -webkit-transform: translateY(-4px) scale(1.05); transform: translateY(-4px) scale(1.05); }
-body.pf0 .tile.sm.focus, body.pf1 .tile.sm.focus { -webkit-transform: translateY(-3px) scale(1.04); transform: translateY(-3px) scale(1.04); }
+body.pf0 .tile.focus, body.pf1 .tile.focus { -webkit-transform: translateY(-4px) scale(1.05); transform: translateY(-4px) scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,.34), inset 0 0 0 2px rgba(255,255,255,.88); }
+body.pf0 .tile.sm.focus, body.pf1 .tile.sm.focus { -webkit-transform: translateY(-3px) scale(1.04); transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 16px rgba(0,0,0,.3), inset 0 0 0 2px rgba(255,255,255,.88); }
 body.pf0 .tile, body.pf0 .tile.sm { transition-duration: .15s; }
 body.pf0 #row { transition-duration: .18s; }
 
