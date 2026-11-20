@@ -23,8 +23,8 @@
 
   /* 1 = effect on. Fast switches off everything that is expensive to paint. */
   var PRESET = [
-    { shade: 0, overlays: 0, shadow: 0, round: 1, panelfade: 0, bg: 1, lift: 1, rowslide: 1, layers: 0, hidehome: 1, zoom: 0 },
-    { shade: 0, overlays: 1, shadow: 0, round: 1, panelfade: 1, bg: 1, lift: 1, rowslide: 1, layers: 0, hidehome: 1, zoom: 0 },
+    { shade: 0, overlays: 0, shadow: 0, round: 1, panelfade: 0, bg: 1, lift: 1, rowslide: 1, layers: 1, hidehome: 1, zoom: 0 },
+    { shade: 0, overlays: 1, shadow: 0, round: 1, panelfade: 1, bg: 1, lift: 1, rowslide: 1, layers: 1, hidehome: 1, zoom: 0 },
     { shade: 1, overlays: 1, shadow: 1, round: 1, panelfade: 1, bg: 1, lift: 1, rowslide: 1, layers: 1, hidehome: 1, zoom: 0 }
   ];
 
