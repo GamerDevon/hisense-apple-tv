@@ -7,7 +7,7 @@
   var TV = window.TV, $ = TV.$;
 
   var SCR = { page: null, idx: 0, mainIdx: 0, cats: [], stack: [] };
-  var els = [], vals = [], base = "srow", win = { start: 0, count: 9, ready: false }, shown = [];
+  var els = [], vals = [], base = "srow", win = { start: 0, count: 9, ready: false }, shown = [], pill = null, pillY = -1;
 
   TV.cats = [];
   TV.addCat = function (c) { TV.cats.push(c); };
@@ -29,7 +29,7 @@
   function mk(tagName, cls) { var e = document.createElement(tagName); if (cls) { e.className = cls; } return e; }
 
   /* Show only the rows that fit; keep the focused row inside the window */
-  function rowH() { return base === "srow main" ? 92 : ($("sright").className === "tight" ? 84 : 102); }
+  function rowH() { return base === "srow main" ? 92 : ($("sright").className.indexOf("tight") > -1 ? 84 : 102); }
   function fitWindow() {
     var h = $("stage").offsetHeight || 1080;
     win.count = Math.max(3, Math.floor((h - 220) / rowH()));
@@ -47,9 +47,27 @@
     win.ready = true;
   }
 
+  /* Light row animation (body.ra1): ONE highlight element slides between rows with a transform (no repainting),
+     and the whole list fades in once. The original per-row animations are body.ra2 (Full). */
+  function placePill() {
+    if (!pill || !els[SCR.idx] || !TV.hasClass("ra1")) { return; }
+    var y = els[SCR.idx].offsetTop;
+    if (y !== pillY) { pillY = y; pill.style.webkitTransform = pill.style.transform = "translateY(" + y + "px)"; }
+  }
+  function makePill(container, cls) {
+    container.className = cls;
+    if (TV.hasClass("ra1")) { void container.offsetWidth; container.className = cls ? cls + " listin" : "listin"; }
+    var p = pill = mk("div", "sfocus jump");
+    pillY = -1;
+    p.style.height = (els[0] ? els[0].offsetHeight : 84) + "px";
+    container.appendChild(p);
+    setTimeout(function () { p.className = "sfocus"; }, 40);   /* first placement jumps, later ones slide */
+  }
+
   function paint() {
     for (var i = 0; i < els.length; i++) { els[i].className = base + (i === SCR.idx ? " focus" : ""); }
     fitWindow();
+    placePill();
   }
   function updateSettings() {
     if (!TV.panelOpen || !SCR.page) { return; }
@@ -75,6 +93,7 @@
       list.appendChild(r);
       els.push(r);
     }
+    makePill(list, "");
     paint();
     setPanelClass();
   }
@@ -99,6 +118,7 @@
       els.push(r);
       vals.push(v);
     }
+    makePill(rt, p.items.length > 6 ? "tight" : "");
     updateSettings();
     paint();
     setPanelClass();
@@ -144,6 +164,7 @@
   }
 
   TV.updateSettings = updateSettings;
+  TV.settingsPaint = paint;
   TV.openPanel = openPanel;
   TV.closePanel = closePanel;
   TV.settingsHome = showMain;

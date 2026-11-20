@@ -9,6 +9,8 @@
     items: [
       { name: "Performance mode", opts: ["Fast", "Balanced", "Pretty"], get: function () { return S.perf; },
         set: function (i) { S.perf = i; TV.saveSettings(); TV.applyPerf(); } },
+      { name: "Settings animation", opts: ["Off", "Light", "Full"], get: function () { return TV.rowAnimLevel(); },
+        set: function (i) { S.rowAnim = i; TV.saveSettings(); TV.applyPerf(); } },
       { name: "Speed test", val: function () { return TV.stressRunning() ? "Running..." : "Run (6 s)"; }, run: function () { TV.runStress(); } }
     ]
   });

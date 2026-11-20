@@ -11,11 +11,22 @@ body.x-shade #shade { display: none; }
 body.x-overlays .tile::before, body.x-overlays .tile::after { display: none; }
 body.x-shadow .tile.focus { box-shadow: 0 0 0 5px #fff; }
 body.x-shadow .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
-body.x-round .tile, body.x-round .glass, body.x-round .srow, body.x-round #toast { border-radius: 0; }
+body.x-round .tile, body.x-round .glass, body.x-round .srow, body.x-round .sfocus, body.x-round #toast { border-radius: 0; }
 body.x-panelfade #panelwrap, body.x-panelfade #panelwrap.on, body.x-panelfade #spage, body.x-panelfade #sdetail { transition: none; }
-body.x-rowanim .srow { transition: none; -webkit-animation: none; animation: none; }
-body.x-rowanim .srow.focus { -webkit-transform: none; transform: none; }
 body.x-bg #bg { background: #0d1524 !important; }
 body.x-lift .tile.focus, body.x-lift .tile.sm.focus { -webkit-transform: none; transform: none; }
 body.x-rowslide #row { transition: none; }
 body.x-layers .tile { will-change: auto; }
+
+/* Settings animation: body.ra0 Off, body.ra1 Light, body.ra2 Full (original per-row animation and scale) */
+body.ra0 .srow, body.ra1 .srow { transition: none; -webkit-animation: none; animation: none; }
+body.ra0 .srow.focus, body.ra1 .srow.focus { -webkit-transform: none; transform: none; }
+body.ra1 .srow { z-index: 1; }
+body.ra1 .srow.focus { background: transparent; }
+.sfocus { display: none; position: absolute; left: 0; top: 0; width: 100%; border-radius: 24px; background: rgba(255,255,255,.94); z-index: 0; pointer-events: none;
+  will-change: transform; -webkit-transition: -webkit-transform .16s ease-out; transition: transform .16s ease-out; }
+.sfocus.jump { -webkit-transition: none; transition: none; }
+body.ra1 .sfocus { display: block; }
+.listin { -webkit-animation: listin .26s ease-out; animation: listin .26s ease-out; }
+@-webkit-keyframes listin { from { opacity: 0; -webkit-transform: translateY(14px); } to { opacity: 1; -webkit-transform: none; } }
+@keyframes listin { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
