@@ -14,6 +14,7 @@
 
   TV.initBlur();
   TV.applyAccess();
+  TV.applyPerf();
   TV.randomWallpaper();
   TV.setupWpTimer();
   TV.buildTiles();

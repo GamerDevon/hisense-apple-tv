@@ -52,6 +52,8 @@
     out.push("deviceMemory: " + (navigator.deviceMemory ? "~" + navigator.deviceMemory + " GB (rounded)" : "n/a"));
     out.push("Network: " + (c ? (c.effectiveType || "?") + (c.downlink ? ", " + c.downlink + " Mbps" : "") : "n/a"));
     out.push("Window: " + window.innerWidth + "x" + window.innerHeight);
+    out.push("Stage scale: " + (TV.scale ? TV.scale.toFixed(2) : "1.00") + (TV.zoomOn ? " (zoom)" : ""));
+    out.push("Mode: " + ["Fast", "Balanced", "Pretty"][TV.S.perf] + (TV.hasClass("blur") ? " + blur" : ""));
     out.push("Screen: " + screen.width + "x" + screen.height + " @" + (window.devicePixelRatio || 1) + "x");
     out.push("Heap = page JS memory, not TV RAM");
     return out;

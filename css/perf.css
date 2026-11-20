@@ -1,0 +1,21 @@
+/* Performance modes (see js/perf.js): body.pf0 Fast, body.pf1 Balanced, body.pf2 Pretty (original look).
+   body.x-<effect> means that effect is switched off. */
+
+/* Cheaper tile focus for Fast and Balanced: a small scale instead of lift + big scale, shorter animations */
+body.pf0 .tile.focus, body.pf1 .tile.focus { -webkit-transform: scale(1.07); transform: scale(1.07); }
+body.pf0 .tile.sm.focus, body.pf1 .tile.sm.focus { -webkit-transform: scale(1.06); transform: scale(1.06); }
+body.pf0 .tile, body.pf0 .tile.sm { transition-duration: .15s; }
+body.pf0 #row { transition-duration: .18s; }
+
+body.x-shade #shade { display: none; }
+body.x-overlays .tile::before, body.x-overlays .tile::after { display: none; }
+body.x-shadow .tile.focus { box-shadow: 0 0 0 5px #fff; }
+body.x-shadow .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
+body.x-round .tile, body.x-round .glass, body.x-round .srow, body.x-round #toast { border-radius: 0; }
+body.x-panelfade #panelwrap, body.x-panelfade #panelwrap.on, body.x-panelfade #spage, body.x-panelfade #sdetail { transition: none; }
+body.x-rowanim .srow { transition: none; -webkit-animation: none; animation: none; }
+body.x-rowanim .srow.focus { -webkit-transform: none; transform: none; }
+body.x-bg #bg { background: #0d1524 !important; }
+body.x-lift .tile.focus, body.x-lift .tile.sm.focus { -webkit-transform: none; transform: none; }
+body.x-rowslide #row { transition: none; }
+body.x-layers .tile { will-change: auto; }

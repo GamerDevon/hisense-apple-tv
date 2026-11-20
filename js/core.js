@@ -24,8 +24,9 @@
     showWeather: true, showWall: true, showRecent: true, showHints: true,
     city: (C.weather && C.weather.name) || "",
     hidden: {},                          /* app name -> true when hidden from Home */
-    blur: false,                          /* frosted glass look; if the TV lags, switch it off (stays off) */
+    blur: true,                          /* frosted glass look; if the TV lags, switch it off (stays off) */
     dateFmt: 0, focusStrong: false, bigClock: false,
+    perf: 0, perfV: 0, lab: {},          /* perf: 0 Fast, 1 Balanced, 2 Pretty. lab: per-effect overrides (developer) */
     dev: false, perfHud: false
   };
   try {
@@ -33,6 +34,9 @@
     for (var sk in saved) { if (saved.hasOwnProperty(sk)) { S[sk] = saved[sk]; } }
   } catch (e) {}
   if (!S.hidden || typeof S.hidden !== "object") { S.hidden = {}; }
+  /* v0.9.1 performance fix: everyone starts in Fast mode with blur off (both can be changed in Settings) */
+  if (S.perfV !== 1) { S.perfV = 1; S.perf = 0; S.blur = false; }
+  if (!S.lab || typeof S.lab !== "object") { S.lab = {}; }
   function saveSettings() { store("tvhome.settings", JSON.stringify(S)); }
 
   window.TV = {

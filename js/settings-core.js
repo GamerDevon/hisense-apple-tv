@@ -118,8 +118,8 @@
     else { showMain(); }
   }
 
-  function openPanel() { TV.panelOpen = true; SCR.mainIdx = 0; showMain(); }
-  function closePanel() { TV.panelOpen = false; $("panelwrap").className = ""; }
+  function openPanel() { TV.panelOpen = true; SCR.mainIdx = 0; if (TV.onPanel) { TV.onPanel(true); } showMain(); }
+  function closePanel() { TV.panelOpen = false; $("panelwrap").className = ""; if (TV.onPanel) { TV.onPanel(false); } }
   function stepItem(it, d) { var n = it.opts.length; it.set((it.get() + d + n) % n); updateSettings(); }
 
   function settingsKey(k) {

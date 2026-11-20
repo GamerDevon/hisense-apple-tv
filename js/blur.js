@@ -17,6 +17,7 @@
     S.blur = !!on;
     TV.saveSettings();
     applyBlur();
+    if (TV.onPanel) { TV.onPanel(TV.panelOpen); }
     if (TV.updateSettings) { TV.updateSettings(); }
     if (notify) { TV.toast(S.blur ? "Blur on (press 2 to turn it off)" : "Blur off"); }
   }
