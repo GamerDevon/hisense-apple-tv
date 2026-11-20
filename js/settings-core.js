@@ -56,7 +56,7 @@
   }
   function makePill(container, cls) {
     container.className = cls;
-    if (TV.hasClass("ra1")) { void container.offsetWidth; container.className = cls ? cls + " listin" : "listin"; }
+    /* Do not animate the whole list on entry; keep Settings responsive and calm. */
     var p = pill = mk("div", "sfocus jump");
     pillY = -1;
     p.style.height = (els[0] ? els[0].offsetHeight : 84) + "px";
