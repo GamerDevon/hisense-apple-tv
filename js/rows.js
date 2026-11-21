@@ -147,7 +147,7 @@
 
     /* A lightweight tvOS-inspired launch: expand the selected tile into a dark hand-off screen. */
     var source = rowsEls[rowIdx][idxs[rowIdx]];
-    if (!source || TV.hasClass("lite") || TV.hasClass("x-panelfade")) {
+    if (!source || TV.hasClass("lite")) {
       setTimeout(function () { window.location.href = t.url; }, 80);
       return;
     }
