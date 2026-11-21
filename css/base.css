@@ -47,7 +47,7 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
   transition: opacity .24s ease-out;
 }
 .app-launch-tile {
-  position: absolute; margin: 0; z-index: 1; overflow: hidden;
+  position: absolute; display: block; margin: 0; z-index: 1; overflow: hidden;
   background: #05070b !important; border: 0; box-shadow: none !important;
   transform: none !important; transition:
     left .28s cubic-bezier(.2,.7,.2,1),
@@ -58,7 +58,7 @@ body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
 }
 .app-launch-tile::before, .app-launch-tile::after { display: none !important; }
 .app-launch-tile img {
-  left: 50% !important; top: 50% !important;
+  position: absolute !important; left: 50% !important; top: 50% !important;
   object-fit: contain; transform: translate(-50%,-50%) !important;
 }
 body.lite .app-launch { display: none; }
