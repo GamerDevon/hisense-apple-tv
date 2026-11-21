@@ -1,13 +1,9 @@
 /* Performance modes (see js/perf.js): body.pf0 Fast, body.pf1 Balanced, body.pf2 Pretty (original look).
    body.x-<effect> means that effect is switched off. */
 
-/* All performance modes use the same restrained white focus state. */
-body.pf0 .tile.focus, body.pf1 .tile.focus,
-body.pf0 .tile.sm.focus, body.pf1 .tile.sm.focus {
-  background: #fff !important;
-  -webkit-transform: scale(1.03); transform: scale(1.03);
-  box-shadow: none;
-}
+/* Cheaper tile focus for Fast and Balanced: a small scale instead of lift + big scale, shorter animations */
+body.pf0 .tile.focus, body.pf1 .tile.focus { -webkit-transform: translateY(-4px) scale(1.05); transform: translateY(-4px) scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,.34), inset 0 0 0 2px rgba(255,255,255,.88); }
+body.pf0 .tile.sm.focus, body.pf1 .tile.sm.focus { -webkit-transform: translateY(-3px) scale(1.04); transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 16px rgba(0,0,0,.3), inset 0 0 0 2px rgba(255,255,255,.88); }
 body.pf0 .tile, body.pf0 .tile.sm { transition-duration: .15s; }
 body.pf0 #row { transition-duration: .18s; }
 
@@ -27,7 +23,7 @@ body.x-layers .tile.focus { will-change: auto; }
 
 /* Settings animation: body.ra0 Off, body.ra1 Light, body.ra2 Full (original per-row animation and scale) */
 body.ra0 .srow, body.ra1 .srow { transition: none; -webkit-animation: none; animation: none; }
-body.ra0 .srow.focus, body.ra1 .srow.focus { -webkit-transform: none; transform: none; }
+body.ra0 .srow.focus, body.ra1 .srow.focus { -webkit-transform: scale(1.015); transform: scale(1.015); }
 body.ra1 .srow { z-index: 1; }
 body.ra1 .srow.focus { background: transparent; }
 .sfocus { display: none; position: absolute; left: 0; top: 0; width: 100%; border-radius: 24px; background: rgba(255,255,255,.94); z-index: 0; pointer-events: none;
