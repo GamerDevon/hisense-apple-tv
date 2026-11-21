@@ -158,15 +158,19 @@
     overlay.className = "app-launch";
     overlay.style.opacity = "0";
     var clone = source.cloneNode(true);
-    clone.className = "app-launch-tile";
+    clone.className = "tile app-launch-tile";
     clone.style.left = ((rect.left - stageRect.left) / scale) + "px";
     clone.style.top = ((rect.top - stageRect.top) / scale) + "px";
     clone.style.width = (rect.width / scale) + "px";
     clone.style.height = (rect.height / scale) + "px";
     clone.style.borderRadius = rowIdx === 1 ? "20px" : "28px";
     clone.style.background = "#05070b";
+    clone.style.margin = "0";
     var icon = clone.querySelector("img");
     if (icon) {
+      icon.style.position = "absolute";
+      icon.style.left = "50%"; icon.style.top = "50%";
+      icon.style.transform = "translate(-50%,-50%)";
       icon.style.width = (rect.width / scale * 0.62) + "px";
       icon.style.height = (rect.height / scale * 0.64) + "px";
       icon.style.transition = "width .28s cubic-bezier(.2,.7,.2,1), height .28s cubic-bezier(.2,.7,.2,1)";
