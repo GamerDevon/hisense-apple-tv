@@ -5,9 +5,8 @@
   var TV = window.TV, C = TV.C;
 
   /* Keep the simulated installed version separate from the code build version. */
-  var BUILD_VERSION = C.version || "1.0.6";
+  var BUILD_VERSION = C.version || "1.0.8";
   var installedVersion = TV.store("kivo.installedVersion") || "1.0.3";
-  C.version = installedVersion;
   var updateChecked = false, updating = false, updatePhase = 0, timer = 0;
   var updateStatus = "Not checked";
   var UPDATE_STEPS = ["Checking for updates", "Downloading update", "Preparing installation", "Installing Kivo TV", "Finalising update", "Restarting Kivo TV"];
@@ -35,7 +34,6 @@
       if (updatePhase >= UPDATE_STEPS.length) {
         installedVersion = BUILD_VERSION;
         TV.store("kivo.installedVersion", installedVersion);
-        C.version = installedVersion;
         updating = false; updateChecked = true; updateStatus = "Updated to " + installedVersion;
         updatePhase = 0;
         TV.updateSettings();
