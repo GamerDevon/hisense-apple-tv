@@ -32,9 +32,9 @@
 .srow:nth-child(10) { animation-delay: .36s; -webkit-animation-delay: .36s; }
 
 .srow .sv { float: right; font-weight: 500; opacity: .6; }
-.srow.main { height: 84px; line-height: 84px; margin-bottom: 8px; padding-left: 104px; }
-.srow.main .sico { position: absolute; left: 18px; top: 10px; }
-.srow.main .chev { position: absolute; right: 36px; top: 30px; margin-top: 0; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
+.srow.main { height: 84px; line-height: 84px; margin-bottom: 8px; padding: 0 36px; background: rgba(255,255,255,.11); font-weight: 500; }
+.srow.main .sico { display: none; }
+.srow.main .chev { position: absolute; right: 32px; top: 30px; margin-top: 0; width: 16px; height: 16px; border-top: 3px solid currentColor; border-right: 3px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .48; }
 .srow.focus { background: rgba(255,255,255,.96); color: #111; -webkit-transform: scale(1.015); transform: scale(1.015); }
 .srow.focus .sv { opacity: .6; }
 .srow .chev { position: absolute; right: 30px; top: 50%; margin-top: -9px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
