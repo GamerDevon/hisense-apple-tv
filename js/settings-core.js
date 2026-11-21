@@ -84,10 +84,7 @@
     list.innerHTML = "";
     resetRows();
     for (var i = 0; i < SCR.cats.length; i++) {
-      var c = SCR.cats[i], r = mk("div", "srow main"), ic = mk("div", "sico");
-      ic.style.background = c.color;
-      ic.innerHTML = TV.ICONS[c.icon];
-      r.appendChild(ic);
+      var c = SCR.cats[i], r = mk("div", "srow main");
       r.appendChild(document.createTextNode(c.name));
       r.appendChild(mk("span", "chev"));
       list.appendChild(r);
