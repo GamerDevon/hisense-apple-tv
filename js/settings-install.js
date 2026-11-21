@@ -1,39 +1,17 @@
-/* Settings > Kivo TV installation demo + simulated software updater.
-   These flows are UI simulations; they do not install a VIDAA system package or replace app files. */
+/* Simulated Kivo TV software updater.
+   This UI flow does not download/replace app files or install a VIDAA system package. */
 (function () {
   "use strict";
   var TV = window.TV, C = TV.C;
-  var active = false, status = "Installed", phase = 0, timer = 0;
-  var STEPS = ["Checking Kivo package", "Preparing interface", "Registering Kivo home entry", "Verifying launch files", "Installation complete"];
 
-  function value() {
-    if (active) { return STEPS[Math.min(phase, STEPS.length - 1)] + "…"; }
-    return status === "Installed" ? "Installed · Kivo UI demo" : status;
-  }
-  function start() {
-    if (active) { TV.toast("Kivo installation is already running."); return; }
-    active = true; phase = 0; status = "Installing"; TV.updateSettings();
-    TV.toast("Kivo TV installer started");
-    function next() {
-      phase++;
-      if (phase >= STEPS.length) {
-        active = false; status = "Installed"; timer = 0;
-        TV.updateSettings();
-        TV.toast("Kivo TV installation demo complete");
-        return;
-      }
-      TV.updateSettings();
-      timer = setTimeout(next, 650);
-    }
-    timer = setTimeout(next, 650);
-  }
-
-  /* Keep a simulated installed version in browser storage, separate from the code build version. */
-  var BUILD_VERSION = C.version || "1.0.4";
+  /* Keep the simulated installed version separate from the code build version. */
+  var BUILD_VERSION = C.version || "1.0.6";
   var installedVersion = TV.store("kivo.installedVersion") || "1.0.3";
   C.version = installedVersion;
-  var updateChecked = false, updating = false, updatePhase = 0, updateStatus = "Not checked";
+  var updateChecked = false, updating = false, updatePhase = 0, timer = 0;
+  var updateStatus = "Not checked";
   var UPDATE_STEPS = ["Checking for updates", "Downloading update", "Preparing installation", "Installing Kivo TV", "Finalising update", "Restarting Kivo TV"];
+
   function hasUpdate() { return installedVersion !== BUILD_VERSION; }
   function updateValue() {
     if (updating) { return UPDATE_STEPS[Math.min(updatePhase, UPDATE_STEPS.length - 1)] + "…"; }
@@ -79,17 +57,6 @@
       { name: "Update status", val: updateValue },
       { name: "Check for Updates", val: function () { return "Check now"; }, run: checkUpdate },
       { name: "Install Update", val: function () { return updating ? "Installing…" : (hasUpdate() ? "Install v" + BUILD_VERSION : "No update"); }, run: installUpdate }
-    ]
-  });
-
-  TV.addCat({
-    id: "installer", order: 85, name: "Kivo TV Installer", color: "#0a84ff", icon: "screen",
-    desc: "A presentation-only installation demo. It does not install a VIDAA system package or alter the TV's real Settings.",
-    items: [
-      { name: "Installation status", val: value },
-      { name: "Run installer", val: function () { return active ? "Installing…" : "Start"; }, run: start },
-      { name: "Package", val: function () { return (C.name || "Kivo TV") + " · " + (C.version || "1.0.0"); } },
-      { name: "Installation target", val: function () { return "Kivo interface only"; } }
     ]
   });
 })();
