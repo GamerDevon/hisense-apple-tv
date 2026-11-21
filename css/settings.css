@@ -14,8 +14,8 @@
 #slist { position: absolute; left: 50%; margin-left: -400px; top: 160px; width: 800px; }
 
 .srow {
-  position: relative; height: 92px; margin-bottom: 10px; padding: 0 28px; border-radius: 24px; background: rgba(255,255,255,.08);
-  font-size: 30px; font-weight: 600; line-height: 92px; white-space: nowrap;
+  position: relative; height: 70px; margin-bottom: 8px; padding: 0 26px; border-radius: 20px; background: rgba(255,255,255,.08);
+  font-size: 27px; font-weight: 600; line-height: 70px; white-space: nowrap;
   transition: -webkit-transform .18s ease-out, transform .18s ease-out, background-color .18s ease;
   -webkit-animation: rowin .32s ease-out backwards; animation: rowin .32s ease-out backwards;
 }
@@ -32,12 +32,12 @@
 .srow:nth-child(10) { animation-delay: .36s; -webkit-animation-delay: .36s; }
 
 .srow .sv { float: right; font-weight: 500; opacity: .6; }
-.srow.main { height: 84px; line-height: 84px; margin-bottom: 8px; padding: 0 36px; background: rgba(255,255,255,.11); font-weight: 500; }
+.srow.main { height: 64px; line-height: 64px; margin-bottom: 6px; padding: 0 30px; border-radius: 18px; font-size: 26px; background: rgba(255,255,255,.09); font-weight: 500; }
 .srow.main .sico { display: none; }
-.srow.main .chev { position: absolute; right: 32px; top: 30px; margin-top: 0; width: 16px; height: 16px; border-top: 3px solid currentColor; border-right: 3px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .48; }
+.srow.main .chev { position: absolute; right: 28px; top: 23px; margin-top: 0; width: 14px; height: 14px; border-top: 3px solid currentColor; border-right: 3px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .48; }
 .srow.focus { background: rgba(255,255,255,.96); color: #111; -webkit-transform: scale(1.015); transform: scale(1.015); }
 .srow.focus .sv { opacity: .6; }
-.srow .chev { position: absolute; right: 30px; top: 50%; margin-top: -9px; width: 18px; height: 18px; border-top: 4px solid currentColor; border-right: 4px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
+.srow .chev { position: absolute; right: 26px; top: 50%; margin-top: -7px; width: 14px; height: 14px; border-top: 3px solid currentColor; border-right: 3px solid currentColor; -webkit-transform: rotate(45deg); transform: rotate(45deg); opacity: .5; }
 
 .sico { width: 64px; height: 64px; padding: 12px; border-radius: 16px; line-height: 0; }
 .sico svg { display: block; }
@@ -46,5 +46,5 @@
 #sname { font-size: 56px; font-weight: 700; }
 #sdesc { margin-top: 16px; font-size: 26px; line-height: 36px; opacity: .6; }
 #sright { position: absolute; left: 900px; top: 160px; width: 880px; }
-#sright.tight .srow { height: 76px; line-height: 76px; margin-bottom: 8px; }
+#sright.tight .srow { height: 62px; line-height: 62px; margin-bottom: 6px; font-size: 25px; }
 #phint { position: absolute; left: 0; bottom: 36px; width: 100%; text-align: center; font-size: 20px; opacity: .5; }
