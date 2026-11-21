@@ -137,13 +137,61 @@
     refreshFocus();
     TV.navBlip();
   }
+  var launchPending = false;
   function activate() {
     var t = rowIdx === 0 ? APPS[idxs[0]] : recentTiles[idxs[1]];
-    if (!t) { return; }
+    if (!t || launchPending) { return; }
     if (t.settings) { TV.openPanel(); return; }
     pushRecent(t.name);
     if (S.sound >= 1) { TV.blip(880, 0.12, 0.07); }
-    setTimeout(function () { window.location.href = t.url; }, 140);
+
+    /* A lightweight tvOS-inspired launch: expand the selected tile into a dark hand-off screen. */
+    var source = rowsEls[rowIdx][idxs[rowIdx]];
+    if (!source || TV.hasClass("lite")) {
+      setTimeout(function () { window.location.href = t.url; }, 80);
+      return;
+    }
+    launchPending = true;
+    var stage = $("stage"), stageRect = stage.getBoundingClientRect();
+    var rect = source.getBoundingClientRect(), scale = TV.scale || 1;
+    var overlay = document.createElement("div");
+    overlay.className = "app-launch";
+    overlay.style.opacity = "0";
+    var clone = source.cloneNode(true);
+    clone.className = "app-launch-tile";
+    clone.style.left = ((rect.left - stageRect.left) / scale) + "px";
+    clone.style.top = ((rect.top - stageRect.top) / scale) + "px";
+    clone.style.width = (rect.width / scale) + "px";
+    clone.style.height = (rect.height / scale) + "px";
+    clone.style.borderRadius = rowIdx === 1 ? "20px" : "28px";
+    clone.style.background = "#05070b";
+    var icon = clone.querySelector("img");
+    if (icon) {
+      icon.style.width = (rect.width / scale * 0.62) + "px";
+      icon.style.height = (rect.height / scale * 0.64) + "px";
+      icon.style.transition = "width .28s cubic-bezier(.2,.7,.2,1), height .28s cubic-bezier(.2,.7,.2,1)";
+    }
+    var letter = clone.querySelector(".mono");
+    if (letter) {
+      letter.style.left = "50%"; letter.style.top = "50%";
+      letter.style.width = "180px"; letter.style.height = "180px";
+      letter.style.lineHeight = "180px"; letter.style.fontSize = "100px";
+      letter.style.transform = "translate(-50%,-50%)";
+    }
+    overlay.appendChild(clone);
+    stage.appendChild(overlay);
+    /* Force the start geometry to be committed before transitioning. */
+    clone.offsetWidth;
+    window.setTimeout(function () {
+      overlay.style.opacity = "1";
+      clone.style.left = "0px";
+      clone.style.top = "0px";
+      clone.style.width = (TV.stageW || 1920) + "px";
+      clone.style.height = (stage.offsetHeight || 1080) + "px";
+      clone.style.borderRadius = "0px";
+      if (icon) { icon.style.width = "180px"; icon.style.height = "180px"; }
+    }, 20);
+    window.setTimeout(function () { window.location.href = t.url; }, 320);
   }
 
   TV.buildTiles = buildTiles;

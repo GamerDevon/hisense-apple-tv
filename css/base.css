@@ -38,3 +38,28 @@ body.lite .tile.focus { -webkit-transform: none; transform: none; }
 body.lite .glass { border-radius: 0; }
 body.lite .tile::before, body.lite .tile::after { display: none; }
 body.lite .tile.focus, body.lite .tile.sm.focus { box-shadow: 0 0 0 4px #fff; }
+
+
+/* App launch hand-off: one focused tile expands, avoiding a full-screen blur or heavy effects. */
+.app-launch {
+  position: absolute; inset: 0; z-index: 70; overflow: hidden;
+  background: #05070b; opacity: 0; pointer-events: none;
+  transition: opacity .24s ease-out;
+}
+.app-launch-tile {
+  position: absolute; margin: 0; z-index: 1; overflow: hidden;
+  background: #05070b !important; border: 0; box-shadow: none !important;
+  transform: none !important; transition:
+    left .28s cubic-bezier(.2,.7,.2,1),
+    top .28s cubic-bezier(.2,.7,.2,1),
+    width .28s cubic-bezier(.2,.7,.2,1),
+    height .28s cubic-bezier(.2,.7,.2,1),
+    border-radius .28s ease-out;
+}
+.app-launch-tile::before, .app-launch-tile::after { display: none !important; }
+.app-launch-tile img {
+  left: 50% !important; top: 50% !important;
+  object-fit: contain; transform: translate(-50%,-50%) !important;
+}
+body.lite .app-launch { display: none; }
+body.lite .app-launch-tile { transition: none; }
