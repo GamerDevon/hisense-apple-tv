@@ -4,7 +4,7 @@ window.TVHOME_CONFIG = {
   name: "Kivo TV",
 
   // Shown bottom-right and in the Info panel, so you can tell which file the TV is really running.
-  version: "1.0.0",
+  version: "1.0.1",
 
   // Weather widget (Open-Meteo, no API key needed). Change to your city.
   weather: { name: "Hradec Králové", lat: 50.2104, lon: 15.8252 },
